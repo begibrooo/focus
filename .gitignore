@@ -1,0 +1,10 @@
+# macOS / Xcode
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Package / IPAs
+*.ipa
+Payload/

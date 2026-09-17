@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Focus — iPhone 15 Pro Max Liquid Glass</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --accent: #f97316;
+      --bg: #030712;
+      --glass-bg: rgba(255, 255, 255, 0.07);
+      --glass-surface: rgba(15, 23, 42, 0.65);
+      --glass-border: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0.18) 100%);
+      --text: #f8fafc;
+      --text-secondary: #94a3b8;
+      --listening: #38bdf8;
+      --reading: #34d399;
+      --writing1: #fbbf24;
+      --writing2: #a78bfa;
+      --speaking: #f472b6;
+      --danger: #ef4444;
+      --success: #10b981;
+      --purple: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #000;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 10px;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Liquid Lights Background */
+    .liquid-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 30%, #0c1527 0%, #030712 100%);
+    }
+    .liquid-orb-1 {
+      position: absolute;
+      top: 15%;
+      left: 35%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 70%);
+      filter: blur(80px);
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+    .liquid-orb-2 {
+      position: absolute;
+      bottom: 20%;
+      right: 30%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, rgba(249, 115, 22, 0.15) 50%, transparent 70%);
+      filter: blur(90px);
+      animation: floatOrb 15s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, -30px) scale(1.1); }
+      100% { transform: translate(-30px, 40px) scale(0.95); }
+    }
+
+    /* iPhone 15 Pro Max Titanium Chassis (Exact 430px x 932px Form Factor) */
+    .device-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      height: 932px;
+      background: #0b0f19;
+      border-radius: 60px;
+      padding: 12px;
+      box-shadow: 
+        0 35px 90px -20px rgba(0, 0, 0, 0.95),
+        0 0 0 1px #64748b,
+        0 0 0 4px #1e293b,
+        0 0 0 7px #090d16,
+        inset 0 0 20px rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      transition: transform 0.15s ease;
+    }
+
+    .device-wrapper.shake {
+      animation: phoneShake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes phoneShake {
+      10%, 90% { transform: translate3d(-3px, 0, 0); }
+      20%, 80% { transform: translate3d(5px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+    }
+
+    /* 15 Pro Max Dynamic Island */
+    .dynamic-island-container {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 150;
+      pointer-events: auto;
+    }
+    .dynamic-island {
+      width: 120px;
+      height: 35px;
+      background: #000;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .dynamic-island.active-live {
+      width: 210px;
+      padding: 0 14px;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(59, 130, 246, 0.25);
+    }
+    .island-hardware {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .camera-lens {
+      width: 11px;
+      height: 11px;
+      background: #060911;
+      border-radius: 50%;
+      border: 1px solid #172033;
+      position: relative;
+    }
+    .camera-lens::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 4px;
+      height: 4px;
+      background: rgba(37, 99, 235, 0.5);
+      border-radius: 50%;
+    }
+    .sensor-lens {
+      width: 8px;
+      height: 8px;
+      background: #03050a;
+      border-radius: 50%;
+      border: 1px solid #0f172a;
+    }
+    .island-live-content {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .dynamic-island.active-live .island-hardware {
+      display: none;
+    }
+    .dynamic-island.active-live .island-live-content {
+      display: flex;
+    }
+
+    /* Screen Area */
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 10%, #0f172a 0%, #020617 100%);
+      border-radius: 48px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      height: 52px;
+      padding: 16px 32px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      z-index: 90;
+    }
+    .status-icons {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    /* Pro Ribbon */
+    .dev-ribbon {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+    .dev-toggle-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 4px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 800;
+      transition: all 0.2s;
+    }
+    .dev-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px 92px;
+      position: relative;
+    }
+    .content-area::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-view {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .tab-view.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .nav-title {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+    }
+
+    .xp-pill {
+      background: rgba(249, 115, 22, 0.18);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+    }
+
+    /* =======================================================
+       LIQUID GLASS EFFECT SYSTEM (Frosted Specular Glass)
+       ======================================================= */
+    .liquid-glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.08) 100%);
+      backdrop-filter: blur(28px) saturate(190%) contrast(92%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border-radius: 26px;
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 
+        0 15px 35px -5px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.45),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Specular Liquid Sheen Overlay */
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .liquid-glass:active {
+      transform: scale(0.985);
+    }
+
+    /* Presets */
+    .preset-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .preset-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .preset-pill {
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-secondary);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+    .preset-pill.active {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 
+        0 8px 25px -4px currentColor,
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Liquid Glass Timer Center Orb */
+    .timer-center {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      margin: 12px auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .liquid-timer-orb {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.15) 0%, rgba(52, 211, 153, 0.18) 40%, rgba(0, 0, 0, 0.4) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 
+        inset 0 2px 5px rgba(255, 255, 255, 0.4),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+      transition: background 0.4s;
+    }
+    .timer-svg {
+      transform: rotate(-90deg);
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .timer-circle-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 16;
+    }
+    .timer-circle-progress {
+      fill: none;
+      stroke: var(--reading);
+      stroke-width: 16;
+      stroke-linecap: round;
+      stroke-dasharray: 628;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease;
+      filter: drop-shadow(0 0 12px currentColor);
+    }
+    .timer-labels {
+      position: absolute;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 3;
+    }
+    .timer-skill-label {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+    }
+    .timer-display {
+      font-size: 48px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -1.5px;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+    }
+    .timer-status {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Liquid Buttons */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .btn {
+      flex: 1;
+      padding: 16px;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 45%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 100%);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      pointer-events: none;
+    }
+    .btn:active {
+      transform: scale(0.96);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--reading) 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 8px 25px -4px rgba(16, 185, 129, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .btn-cancel {
+      flex: 0 0 58px;
+      background: rgba(239, 68, 68, 0.15);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: var(--danger);
+      font-size: 20px;
+    }
+
+    /* Banners with Liquid Glass */
+    .banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .icon-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Floating Liquid Tab Bar (VisionOS / iOS 18 Specular Glass) */
+    .tab-bar-container {
+      position: absolute;
+      bottom: 22px;
+      left: 20px;
+      right: 20px;
+      z-index: 80;
+    }
+    .tab-bar {
+      height: 68px;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(35px) saturate(200%);
+      -webkit-backdrop-filter: blur(35px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 34px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 10px;
+      box-shadow: 
+        0 20px 45px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.45),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 8px 18px;
+      border-radius: 20px;
+    }
+    .tab-item:active {
+      transform: scale(0.9);
+    }
+    .tab-item.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+    .tab-icon {
+      font-size: 20px;
+    }
+
+    /* Streak Hero Card */
+    .streak-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .streak-badge {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background: rgba(249, 115, 22, 0.18);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: var(--accent);
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    }
+    .streak-num {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    /* Radar / Skill Distribution Bars */
+    .skill-bar-row {
+      margin-bottom: 12px;
+    }
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+    .skill-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .skill-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    /* Modals / Sheets with Liquid Glass */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-sheet {
+      width: 100%;
+      max-height: 90%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(35px) saturate(200%);
+      -webkit-backdrop-filter: blur(35px) saturate(200%);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-top-left-radius: 34px;
+      border-top-right-radius: 34px;
+      padding: 28px 24px;
+      box-shadow: 
+        0 -20px 50px rgba(0, 0, 0, 0.9),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      overflow-y: auto;
+      animation: slideUp 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .friction-cooldown {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: 4px solid var(--danger);
+      margin: 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--danger);
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    }
+
+    .friction-quote {
+      background: rgba(239, 68, 68, 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #fca5a5;
+    }
+    .friction-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 14px;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 14px;
+      outline: none;
+    }
+    .friction-input:focus {
+      border-color: #f87171;
+    }
+
+    /* Duration Selector Pills */
+    .duration-grid {
+      display: flex;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .duration-pill {
+      flex: 1;
+      padding: 14px 0;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.2s;
+    }
+    .duration-pill.active {
+      background: var(--purple);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    /* iOS Notification Toast */
+    .ios-notification {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(30px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 24px;
+      padding: 14px 18px;
+      z-index: 300;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      transform: translateY(-170%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .ios-notification.show {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="liquid-background">
+    <div class="liquid-orb-1"></div>
+    <div class="liquid-orb-2"></div>
+  </div>
+
+  <!-- Instructions Banner -->
+  <div style="text-align: center; margin-bottom: 14px; color: #cbd5e1; font-size: 13px; z-index: 20;">
+    <strong>iPhone 15 Pro Max — Liquid Glass Edition (430×932)</strong><br>
+    <span style="font-size: 12px; color: #94a3b8;">Frosted specular refraction, dynamic island live activity, and tough love.</span>
+  </div>
+
+  <!-- Simulated iPhone 15 Pro Max Chassis -->
+  <div id="phone-frame" class="device-wrapper">
+    
+    <!-- 15 Pro Max Dynamic Island -->
+    <div class="dynamic-island-container">
+      <div id="dynamic-island" class="dynamic-island">
+        <!-- Physical Camera Hardware (when idle) -->
+        <div id="island-hardware" class="island-hardware">
+          <div class="camera-lens"></div>
+          <div class="sensor-lens"></div>
+        </div>
+        <!-- Live Activity Display (Only active when timer is running) -->
+        <div id="island-live" class="island-live-content">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span id="island-icon" style="font-size: 13px;">📖</span>
+            <span id="island-skill-text" style="color: #94a3b8; font-size: 11px;">Reading</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span id="island-time-text" style="color: var(--reading); font-variant-numeric: tabular-nums;">59:45</span>
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; animation: pulseGlow 1.5s infinite;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen -->
+    <div class="screen">
+      <!-- Simulated iOS In-App Notification Toast -->
+      <div id="toast" class="ios-notification">
+        <div id="toast-icon" style="font-size: 28px;">🚨</div>
+        <div style="flex: 1;">
+          <div style="font-size: 13px; font-weight: 800; color: #fff;" id="toast-title">BRO, WAKE UP!</div>
+          <div style="font-size: 11px; color: #cbd5e1;" id="toast-body">Close TikTok and lock in for IELTS 8.0.</div>
+        </div>
+      </div>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <span id="live-time">9:41</span>
+        <div class="status-icons">
+          <span>5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <!-- Dev Fast Test Ribbon -->
+      <div class="dev-ribbon">
+        <span>⚡ 15 Pro Max Test: <strong id="speed-label" style="color: #f87171;">OFF (Real Time)</strong></span>
+        <button class="dev-toggle-btn" onclick="toggleTestSpeed()">Toggle 10s Demo</button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="content-area">
+        
+        <!-- TAB 1: STUDY -->
+        <div id="tab-study" class="tab-view active">
+          <div class="nav-header">
+            <div class="nav-title">IELTS Focus 🔒</div>
+            <div class="xp-pill" id="level-badge">⭐ Level 1: Novice</div>
+          </div>
+
+          <!-- IELTS Presets -->
+          <div class="preset-scroll" id="preset-list"></div>
+
+          <!-- Liquid Glass Countdown Card -->
+          <div class="liquid-glass" style="text-align: center; padding: 20px; position: relative;">
+            <div class="timer-center">
+              <div id="timer-orb" class="liquid-timer-orb"></div>
+              <svg class="timer-svg" viewBox="0 0 230 230">
+                <circle class="timer-circle-bg" cx="115" cy="115" r="95"></circle>
+                <circle id="timer-progress" class="timer-circle-progress" cx="115" cy="115" r="95"></circle>
+              </svg>
+              <div class="timer-labels">
+                <span id="skill-label" class="timer-skill-label" style="color: var(--reading)">Reading</span>
+                <span id="time-display" class="timer-display">60:00</span>
+                <span id="state-label" class="timer-status"><span>⚡</span> Ready to grind</span>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="btn-row" id="control-buttons">
+              <button id="start-btn" class="btn btn-primary" onclick="startTimer()">
+                <span>🔒 Lock In: Start Session</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Strict Bro's Game Pass (Liquid Glass) -->
+          <div class="liquid-glass banner" onclick="openBreakPassModal()">
+            <div class="banner-left">
+              <div class="icon-badge" style="color: #c084fc;">🥊</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 800; color: #fff;">Strict Bro's Game Pass</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Need a break? Set strict minutes, zero excuses</div>
+              </div>
+            </div>
+            <div style="color: #c084fc; font-size: 13px; font-weight: 800;">Set ⏱</div>
+          </div>
+
+          <!-- Focus Mode Shortcut Banner (Liquid Glass) -->
+          <div class="liquid-glass banner" onclick="triggerFocusShortcut()">
+            <div class="banner-left">
+              <div class="icon-badge" style="color: #818cf8;">🛡️</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 800;">Lock In Focus Mode</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Silences distractions via '<span id="shortcut-name-disp">Study Focus</span>'</div>
+              </div>
+            </div>
+            <div style="color: #818cf8; font-size: 13px; font-weight: 800;">Launch ↗</div>
+          </div>
+
+          <!-- Strict Bro Advice -->
+          <div class="liquid-glass" style="background: rgba(249, 115, 22, 0.08); border-color: rgba(249, 115, 22, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 11px; font-weight: 900; color: var(--accent);">🗣️ STRICT BRO'S ADVICE</span>
+              <span style="font-size: 11px; color: var(--text-secondary); cursor: pointer;" onclick="cycleTip()">Next Tip ↻</span>
+            </div>
+            <div id="tip-text" style="font-size: 12px; color: #fed7aa; line-height: 1.4; font-weight: 600;">
+              Bro, in Reading, if the text doesn't say it, it's NOT GIVEN. Don't invent facts. Stick to the text.
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: LOG & STREAKS -->
+        <div id="tab-log" class="tab-view">
+          <div class="nav-title">Grind Log & Streaks 🔥</div>
+
+          <!-- Streak Card -->
+          <div class="liquid-glass streak-card">
+            <div class="streak-badge">🔥</div>
+            <div>
+              <div style="display: flex; align-items: baseline; gap: 6px;">
+                <span id="streak-count" class="streak-num">0</span>
+                <span style="font-size: 18px; font-weight: 900;">Days Streak</span>
+              </div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+                Zero slacking. Consistency separates Band 8.0 from the rest.
+              </div>
+            </div>
+          </div>
+
+          <!-- Band 8.0 Skill Progress Breakdown -->
+          <div class="liquid-glass">
+            <div style="font-size: 14px; font-weight: 800; margin-bottom: 14px;">Skill Progress Toward 8.0</div>
+            
+            <div class="skill-bar-row">
+              <div class="skill-bar-header">
+                <span>Listening</span>
+                <span id="skill-mins-listening">0m</span>
+              </div>
+              <div class="skill-track"><div id="bar-listening" class="skill-fill" style="background: var(--listening); width: 0%;"></div></div>
+            </div>
+
+            <div class="skill-bar-row">
+              <div class="skill-bar-header">
+                <span>Reading</span>
+                <span id="skill-mins-reading">0m</span>
+              </div>
+              <div class="skill-track"><div id="bar-reading" class="skill-fill" style="background: var(--reading); width: 0%;"></div></div>
+            </div>
+
+            <div class="skill-bar-row">
+              <div class="skill-bar-header">
+                <span>Writing T1 & T2</span>
+                <span id="skill-mins-writing">0m</span>
+              </div>
+              <div class="skill-track"><div id="bar-writing" class="skill-fill" style="background: var(--writing2); width: 0%;"></div></div>
+            </div>
+
+            <div class="skill-bar-row">
+              <div class="skill-bar-header">
+                <span>Speaking</span>
+                <span id="skill-mins-speaking">0m</span>
+              </div>
+              <div class="skill-track"><div id="bar-speaking" class="skill-fill" style="background: var(--speaking); width: 0%;"></div></div>
+            </div>
+          </div>
+
+          <div style="font-size: 16px; font-weight: 800; margin: 18px 0 10px;">Proof of Work</div>
+          <div class="liquid-glass" id="session-log-card">
+            <div id="session-log-list">
+              <div style="text-align: center; color: var(--text-secondary); font-size: 13px; padding: 20px;">
+                No sessions logged yet.<br>Bro, what are you waiting for? Put in the work!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: SETTINGS -->
+        <div id="tab-settings" class="tab-view">
+          <div class="nav-title">Strict Settings ⚙️</div>
+
+          <!-- Daily Study Reminders -->
+          <div class="liquid-glass">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 12px;">Daily Wake-Up Calls</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div>
+                <div style="font-size: 14px; font-weight: 700;">Strict Daily Reminder</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Pings you every day to lock in</div>
+              </div>
+              <input type="checkbox" id="reminder-toggle" checked style="width: 22px; height: 22px; accent-color: #ef4444;" onchange="toggleDailyReminder(this.checked)">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <span style="font-size: 13px; color: var(--text-secondary);">Grind Time</span>
+              <input type="time" value="19:00" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 10px; border-radius: 10px; font-size: 13px;">
+            </div>
+            <button class="btn" style="background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 12px; font-size: 13px; width: 100%; border: 1px solid rgba(239, 68, 68, 0.35);" onclick="testReminderNotification()">
+              🔔 Test Strict Bro Alarm
+            </button>
+          </div>
+
+          <!-- Audio FX Sound Toggle -->
+          <div class="liquid-glass">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 14px; font-weight: 700;">Sound Effects (Web Audio)</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Boxing bells, alarms, and click feedback</div>
+              </div>
+              <input type="checkbox" id="audio-toggle" checked style="width: 22px; height: 22px; accent-color: #3b82f6;">
+            </div>
+          </div>
+
+          <!-- Intentional Break Allowance -->
+          <div class="liquid-glass">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 12px;">Game & Social Pass</div>
+            <button class="btn" style="background: rgba(168, 85, 247, 0.25); color: #c084fc; padding: 12px; font-size: 13px; width: 100%; margin-bottom: 8px; border: 1px solid rgba(168, 85, 247, 0.35);" onclick="openBreakPassModal()">
+              🥊 Set Game Allowance
+            </button>
+            <div style="font-size: 11px; color: var(--text-secondary);">
+              Budget your gaming time with strict alerts when your break is over.
+            </div>
+          </div>
+
+          <!-- Anti-Distraction -->
+          <div class="liquid-glass">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 12px;">Tough Love Friction Gate</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 14px; font-weight: 700;">Block Quitting Early</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">10s unskippable cooldown + typing</div>
+              </div>
+              <input type="checkbox" id="friction-toggle" checked style="width: 22px; height: 22px; accent-color: #ef4444;">
+            </div>
+          </div>
+
+          <!-- Screen Time -->
+          <div class="liquid-glass">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 12px;">Screen Time Lockdown</div>
+            <button class="btn" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; padding: 12px; font-size: 13px; width: 100%; border: 1px solid rgba(168, 85, 247, 0.3);" onclick="simulateScreenTime()">
+              ⏱ Open Screen Time Settings
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Floating Liquid Glass Tab Bar -->
+      <div class="tab-bar-container">
+        <div class="tab-bar">
+          <div class="tab-item active" onclick="switchTab('study')">
+            <div class="tab-icon">⏱</div>
+            <span>Study</span>
+          </div>
+          <div class="tab-item" onclick="switchTab('log')">
+            <div class="tab-icon">🔥</div>
+            <span>Log</span>
+          </div>
+          <div class="tab-item" onclick="switchTab('settings')">
+            <div class="tab-icon">⚙️</div>
+            <span>Settings</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRICT BRO GAME PASS MODAL -->
+      <div id="break-modal" class="modal-overlay">
+        <div class="modal-sheet">
+          <div style="text-align: center;">
+            <div style="font-size: 46px;">🥊</div>
+            <div style="font-size: 21px; font-weight: 900; margin: 6px 0;">Strict Bro's Game Pass</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">
+              Be real: does scrolling TikTok get you Band 8.0? Pick your time, and when the buzzer goes off, phone goes face down.
+            </div>
+
+            <div id="break-setup-section">
+              <div class="duration-grid">
+                <div class="duration-pill active" onclick="selectBreakDuration(5, this)">5m</div>
+                <div class="duration-pill" onclick="selectBreakDuration(10, this)">10m</div>
+                <div class="duration-pill" onclick="selectBreakDuration(15, this)">15m</div>
+                <div class="duration-pill" onclick="selectBreakDuration(30, this)">30m</div>
+              </div>
+
+              <button class="btn" style="background: var(--purple); color: #fff; width: 100%; margin-bottom: 12px;" onclick="startBreakTimer()">
+                ✋ I Swear I'll Stop When Time is Up
+              </button>
+            </div>
+
+            <div id="break-active-section" style="display: none; margin: 18px 0;">
+              <div style="font-size: 12px; font-weight: 800; color: #c084fc; text-transform: uppercase;">Clock is Ticking Bro</div>
+              <div id="break-time-display" style="font-size: 52px; font-weight: 900; font-variant-numeric: tabular-nums; margin: 8px 0; color: #fff;">05:00</div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 18px;">
+                Enjoy your quick break. When this hits zero, the alarm blasts and you're back to IELTS prep.
+              </div>
+              <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="endBreakTimerEarly()">
+                ⚡ Enough Slacking — Back to Study
+              </button>
+            </div>
+
+            <button class="btn" style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; width: 100%;" onclick="closeBreakPassModal()">
+              Dismiss
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRICT BRO FRICTION GATE MODAL -->
+      <div id="friction-modal" class="modal-overlay">
+        <div class="modal-sheet">
+          <div style="text-align: center;">
+            <div style="font-size: 48px;">🛑</div>
+            <div style="font-size: 21px; font-weight: 900; margin: 6px 0; color: #f87171;">Bro... Are You Serious?</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">
+              You told yourself you're getting Band 8.0 this year, and you want to quit mid-session? Stop running away when it gets tough. Lock in.
+            </div>
+            
+            <div id="friction-count" class="friction-cooldown">10</div>
+
+            <div style="text-align: left; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">
+              Type this affirmation to confirm you're quitting:
+            </div>
+            <div class="friction-quote">"I am disciplined and I will not throw away my IELTS 8.0"</div>
+            <input id="friction-type-input" class="friction-input" type="text" placeholder="Type exact phrase here..." oninput="checkFrictionMatch()">
+
+            <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="cancelFrictionGate()">
+              🔥 You're Right Bro, I'm Staying In
+            </button>
+
+            <button id="friction-confirm-btn" class="btn" style="width: 100%; background: rgba(239, 68, 68, 0.15); color: var(--danger); opacity: 0.4;" disabled onclick="confirmExitSession()">
+              I'm Quitting Anyway (I Know I'm Slacking)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION COMPLETE MODAL -->
+      <div id="complete-modal" class="modal-overlay">
+        <div class="modal-sheet" style="text-align: center;">
+          <div style="font-size: 58px; margin-bottom: 8px;">🥊</div>
+          <div style="font-size: 23px; font-weight: 900;">Good Work Bro! That's Discipline.</div>
+          <div id="complete-desc" style="font-size: 14px; color: var(--text-secondary); margin: 8px 0 16px;">
+            You completed 60 minutes of IELTS Reading practice.
+          </div>
+
+          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 16px; padding: 14px; margin-bottom: 22px; text-align: left;">
+            <div style="font-size: 13px; font-weight: 800; color: #34d399; margin-bottom: 4px;">Band 8.0 Milestone Logged (+100 XP)</div>
+            <div style="font-size: 11px; color: #cbd5e1;">That's how it's done. Take a breather, review mistakes, and don't slack off tomorrow.</div>
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%;" onclick="dismissCompletionModal()">
+            Done & Save Proof of Work
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Web Audio Synthesizer
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+      },
+      isEnabled() {
+        return document.getElementById('audio-toggle').checked;
+      },
+      playClick() {
+        if (!this.isEnabled()) return;
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.frequency.setValueAtTime(900, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.03);
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.03);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.03);
+      },
+      playStartBell() {
+        if (!this.isEnabled()) return;
+        this.init();
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + (i * 0.04));
+          gain.gain.setValueAtTime(0.3, this.ctx.currentTime + (i * 0.04));
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.8);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(this.ctx.currentTime + (i * 0.04));
+          osc.stop(this.ctx.currentTime + 0.85);
+        });
+      },
+      playBuzzer() {
+        if (!this.isEnabled()) return;
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.6);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.6);
+      },
+      playVictory() {
+        if (!this.isEnabled()) return;
+        this.init();
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          const startTime = this.ctx.currentTime + (idx * 0.12);
+          osc.frequency.setValueAtTime(freq, startTime);
+          gain.gain.setValueAtTime(0.35, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.5);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(startTime); osc.stop(startTime + 0.5);
+        });
+      }
+    };
+
+    // Presets
+    const presets = [
+      { id: 'listening', name: 'Listening', mins: 30, color: 'var(--listening)', icon: '🎧' },
+      { id: 'reading', name: 'Reading', mins: 60, color: 'var(--reading)', icon: '📖' },
+      { id: 'writing1', name: 'Writing T1', mins: 20, color: 'var(--writing1)', icon: '📊' },
+      { id: 'writing2', name: 'Writing T2', mins: 40, color: 'var(--writing2)', icon: '✍️' },
+      { id: 'speaking', name: 'Speaking', mins: 15, color: 'var(--speaking)', icon: '🎙️' }
+    ];
+
+    const tips = [
+      "Bro, in Reading, if the text doesn't say it, it's NOT GIVEN. Don't invent facts. Stick to the text.",
+      "Listening: Singular vs. Plural costs people full bands. Train your ears for the trailing 's'.",
+      "Writing Task 2: Don't write fancy words you don't know how to use. Clear logic beats fake complexity.",
+      "Writing Task 1: Never write your personal opinion. Report the chart like a machine.",
+      "Speaking: Stop saying 'um' and 'like'. Take a 1-second breath and speak with conviction."
+    ];
+
+    let currentPreset = presets[1];
+    let isFastMode = false;
+    let timerState = 'idle';
+    let remainingSeconds = 60 * 60;
+    let totalSeconds = 60 * 60;
+    let timerInterval = null;
+    let tipIndex = 0;
+    let frictionTimer = null;
+    let frictionSecondsLeft = 10;
+    let sessions = JSON.parse(localStorage.getItem('ielts_sessions') || '[]');
+    let userXP = parseInt(localStorage.getItem('ielts_xp') || '100');
+
+    let selectedBreakMins = 5;
+    let breakTimer = null;
+    let breakSecondsLeft = 300;
+
+    const presetListEl = document.getElementById('preset-list');
+    const timeDisplayEl = document.getElementById('time-display');
+    const skillLabelEl = document.getElementById('skill-label');
+    const stateLabelEl = document.getElementById('state-label');
+    const timerProgressEl = document.getElementById('timer-progress');
+    const timerOrbEl = document.getElementById('timer-orb');
+    const controlButtonsEl = document.getElementById('control-buttons');
+    const tipTextEl = document.getElementById('tip-text');
+    const streakCountEl = document.getElementById('streak-count');
+    const sessionLogListEl = document.getElementById('session-log-list');
+    const dynamicIslandEl = document.getElementById('dynamic-island');
+    const islandTimeTextEl = document.getElementById('island-time-text');
+    const islandSkillTextEl = document.getElementById('island-skill-text');
+    const islandIconEl = document.getElementById('island-icon');
+    const levelBadgeEl = document.getElementById('level-badge');
+    const phoneFrameEl = document.getElementById('phone-frame');
+
+    function renderPresets() {
+      presetListEl.innerHTML = '';
+      presets.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = `preset-pill ${p.id === currentPreset.id ? 'active' : ''}`;
+        if (p.id === currentPreset.id) btn.style.background = p.color;
+        btn.innerHTML = `${p.icon} ${p.name} (${p.mins}m)`;
+        btn.onclick = () => {
+          AudioEngine.playClick();
+          selectPreset(p);
+        };
+        if (timerState !== 'idle') btn.disabled = true;
+        presetListEl.appendChild(btn);
+      });
+    }
+
+    function selectPreset(preset) {
+      if (timerState !== 'idle') return;
+      currentPreset = preset;
+      renderPresets();
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerState = 'idle';
+      totalSeconds = isFastMode ? 10 : currentPreset.mins * 60;
+      remainingSeconds = totalSeconds;
+      updateTimerDisplay();
+      renderControls();
+      updateDynamicIsland();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(remainingSeconds / 60);
+      const secs = remainingSeconds % 60;
+      const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      timeDisplayEl.textContent = formatted;
+      skillLabelEl.textContent = currentPreset.name;
+      skillLabelEl.style.color = currentPreset.color;
+      timerProgressEl.style.stroke = currentPreset.color;
+
+      const circumference = 2 * Math.PI * 95;
+      const fraction = remainingSeconds / totalSeconds;
+      const offset = circumference * (1 - fraction);
+      timerProgressEl.style.strokeDashoffset = offset;
+
+      stateLabelEl.innerHTML = timerState === 'idle' 
+        ? `<span>⚡</span> Ready to grind` 
+        : timerState === 'running' 
+        ? `<span>🔒</span> Locked In` 
+        : `<span>⏸</span> Paused (Don't slack)`;
+
+      updateDynamicIsland();
+    }
+
+    function updateDynamicIsland() {
+      if (timerState === 'running') {
+        dynamicIslandEl.classList.add('active-live');
+        const mins = Math.floor(remainingSeconds / 60);
+        const secs = remainingSeconds % 60;
+        islandTimeTextEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        islandTimeTextEl.style.color = currentPreset.color;
+        islandSkillTextEl.textContent = currentPreset.name;
+        islandIconEl.textContent = currentPreset.icon;
+      } else if (timerState === 'paused') {
+        dynamicIslandEl.classList.add('active-live');
+        islandTimeTextEl.textContent = "Paused";
+        islandTimeTextEl.style.color = "#f59e0b";
+        islandSkillTextEl.textContent = currentPreset.name;
+        islandIconEl.textContent = "⏸";
+      } else {
+        dynamicIslandEl.classList.remove('active-live');
+      }
+    }
+
+    function toggleIslandExpand() {
+      AudioEngine.playClick();
+      dynamicIslandEl.classList.toggle('expanded');
+    }
+
+    function renderControls() {
+      if (timerState === 'idle') {
+        controlButtonsEl.innerHTML = `
+          <button class="btn btn-primary" style="background: linear-gradient(135deg, ${currentPreset.color} 0%, rgba(0,0,0,0.4) 100%), ${currentPreset.color}" onclick="startTimer()">
+            <span>🔒 Lock In: Start ${currentPreset.name}</span>
+          </button>
+        `;
+      } else {
+        controlButtonsEl.innerHTML = `
+          <button class="btn btn-cancel" onclick="handleCancelClick()">✕</button>
+          <button class="btn btn-primary" style="background: linear-gradient(135deg, ${currentPreset.color} 0%, rgba(0,0,0,0.4) 100%), ${currentPreset.color}" onclick="${timerState === 'running' ? 'pauseTimer()' : 'resumeTimer()'}">
+            <span>${timerState === 'running' ? '⏸ Pause' : '▶ Resume (No Slacking)'}</span>
+          </button>
+        `;
+      }
+    }
+
+    function startTimer() {
+      AudioEngine.playStartBell();
+      timerState = 'running';
+      dynamicIslandEl.classList.add('expanded');
+      setTimeout(() => dynamicIslandEl.classList.remove('expanded'), 2200);
+      
+      renderControls();
+      renderPresets();
+      updateTimerDisplay();
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          updateTimerDisplay();
+        } else {
+          handleComplete();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      AudioEngine.playClick();
+      timerState = 'paused';
+      clearInterval(timerInterval);
+      renderControls();
+      updateTimerDisplay();
+    }
+
+    function resumeTimer() {
+      AudioEngine.playClick();
+      startTimer();
+    }
+
+    function handleCancelClick() {
+      AudioEngine.playClick();
+      const frictionEnabled = document.getElementById('friction-toggle').checked;
+      if (frictionEnabled && (timerState === 'running' || timerState === 'paused')) {
+        pauseTimer();
+        triggerPhoneShake();
+        openFrictionGate();
+      } else {
+        resetTimer();
+      }
+    }
+
+    function triggerPhoneShake() {
+      phoneFrameEl.classList.remove('shake');
+      void phoneFrameEl.offsetWidth;
+      phoneFrameEl.classList.add('shake');
+      setTimeout(() => phoneFrameEl.classList.remove('shake'), 450);
+    }
+
+    function openBreakPassModal() {
+      AudioEngine.playClick();
+      document.getElementById('break-modal').classList.add('active');
+    }
+
+    function closeBreakPassModal() {
+      AudioEngine.playClick();
+      document.getElementById('break-modal').classList.remove('active');
+    }
+
+    function selectBreakDuration(mins, el) {
+      AudioEngine.playClick();
+      selectedBreakMins = mins;
+      document.querySelectorAll('.duration-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function startBreakTimer() {
+      AudioEngine.playClick();
+      document.getElementById('break-setup-section').style.display = 'none';
+      document.getElementById('break-active-section').style.display = 'block';
+
+      breakSecondsLeft = isFastMode ? 10 : selectedBreakMins * 60;
+      updateBreakDisplay();
+
+      clearInterval(breakTimer);
+      breakTimer = setInterval(() => {
+        if (breakSecondsLeft > 0) {
+          breakSecondsLeft--;
+          updateBreakDisplay();
+        } else {
+          clearInterval(breakTimer);
+          AudioEngine.playBuzzer();
+          triggerPhoneShake();
+          document.getElementById('break-modal').classList.remove('active');
+          document.getElementById('break-setup-section').style.display = 'block';
+          document.getElementById('break-active-section').style.display = 'none';
+          
+          showNotification("🚨 BRO! BREAK IS OVER.", "Close the game. Close TikTok. Get back to IELTS prep right now!", "🚨");
+        }
+      }, 1000);
+    }
+
+    function updateBreakDisplay() {
+      const m = Math.floor(breakSecondsLeft / 60);
+      const s = breakSecondsLeft % 60;
+      document.getElementById('break-time-display').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function endBreakTimerEarly() {
+      AudioEngine.playClick();
+      clearInterval(breakTimer);
+      document.getElementById('break-modal').classList.remove('active');
+      document.getElementById('break-setup-section').style.display = 'block';
+      document.getElementById('break-active-section').style.display = 'none';
+      showNotification("That's discipline bro.", "Break ended early. Let's finish the IELTS grind.", "🥊");
+    }
+
+    function openFrictionGate() {
+      AudioEngine.playBuzzer();
+      frictionSecondsLeft = 10;
+      document.getElementById('friction-count').textContent = '10';
+      document.getElementById('friction-type-input').value = '';
+      const confirmBtn = document.getElementById('friction-confirm-btn');
+      confirmBtn.disabled = true;
+      confirmBtn.style.opacity = '0.4';
+      document.getElementById('friction-modal').classList.add('active');
+
+      clearInterval(frictionTimer);
+      frictionTimer = setInterval(() => {
+        if (frictionSecondsLeft > 0) {
+          frictionSecondsLeft--;
+          document.getElementById('friction-count').textContent = frictionSecondsLeft;
+        } else {
+          clearInterval(frictionTimer);
+          document.getElementById('friction-count').textContent = '✓';
+          checkFrictionMatch();
+        }
+      }, 1000);
+    }
+
+    function checkFrictionMatch() {
+      const input = document.getElementById('friction-type-input').value.trim().toLowerCase();
+      const target = "i am disciplined and i will not throw away my ielts 8.0";
+      const confirmBtn = document.getElementById('friction-confirm-btn');
+      
+      if (frictionSecondsLeft === 0 && input === target) {
+        confirmBtn.disabled = false;
+        confirmBtn.style.opacity = '1';
+        confirmBtn.style.background = 'rgba(239, 68, 68, 0.3)';
+      } else {
+        confirmBtn.disabled = true;
+        confirmBtn.style.opacity = '0.4';
+        confirmBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+      }
+    }
+
+    function cancelFrictionGate() {
+      AudioEngine.playClick();
+      clearInterval(frictionTimer);
+      document.getElementById('friction-modal').classList.remove('active');
+      resumeTimer();
+      showNotification("Good decision bro.", "Locked back into your session.", "🔒");
+    }
+
+    function confirmExitSession() {
+      AudioEngine.playClick();
+      clearInterval(frictionTimer);
+      document.getElementById('friction-modal').classList.remove('active');
+      resetTimer();
+      
+      userXP = Math.max(0, userXP - 50);
+      localStorage.setItem('ielts_xp', userXP);
+      updateLevelBadge();
+      
+      showNotification("Session Aborted ❌", "Bro... you slacked today (-50 XP). Reset and do better.", "❌");
+    }
+
+    function handleComplete() {
+      clearInterval(timerInterval);
+      timerState = 'idle';
+      AudioEngine.playVictory();
+      
+      userXP += 100;
+      localStorage.setItem('ielts_xp', userXP);
+      updateLevelBadge();
+
+      showNotification("Good work bro! 🥊", `Logged ${currentPreset.mins}m toward IELTS 8.0 (+100 XP).`, "🎯");
+      
+      document.getElementById('complete-desc').textContent = 
+        `You finished ${currentPreset.mins} minutes of IELTS ${currentPreset.name}. That's real work.`;
+      document.getElementById('complete-modal').classList.add('active');
+      
+      sessions.unshift({
+        id: Date.now(),
+        date: new Date().toISOString(),
+        name: currentPreset.name,
+        skillId: currentPreset.id,
+        duration: currentPreset.mins,
+        color: currentPreset.color,
+        icon: currentPreset.icon
+      });
+      localStorage.setItem('ielts_sessions', JSON.stringify(sessions));
+      renderLogs();
+      updateDynamicIsland();
+    }
+
+    function dismissCompletionModal() {
+      AudioEngine.playClick();
+      document.getElementById('complete-modal').classList.remove('active');
+      resetTimer();
+    }
+
+    function updateLevelBadge() {
+      let level = "⭐ Level 1: Novice";
+      if (userXP >= 500) level = "🏆 Band 8.0 Master";
+      else if (userXP >= 300) level = "🔥 Level 3: Grind Master";
+      else if (userXP >= 150) level = "⚡ Level 2: Focused Scholar";
+      levelBadgeEl.textContent = `${level} (${userXP} XP)`;
+    }
+
+    function showNotification(title, body, icon = "🎯") {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-icon').textContent = icon;
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-body').textContent = body;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4200);
+    }
+
+    function testReminderNotification() {
+      AudioEngine.playBuzzer();
+      showNotification("Yo bro, wake up and study! 🥊", "Band 8.0 won't achieve itself. Put down the phone and lock in.", "🥊");
+    }
+
+    function toggleDailyReminder(enabled) {
+      AudioEngine.playClick();
+      if (enabled) {
+        showNotification("Strict Alarms Armed ⏰", "I'll ping you every day. No sleeping on your goals.", "⏰");
+      } else {
+        showNotification("Alarms Muted 🔕", "Don't forget to study on your own bro.", "🔕");
+      }
+    }
+
+    function renderLogs() {
+      calculateStreak();
+      updateSkillBreakdown();
+
+      if (sessions.length === 0) {
+        sessionLogListEl.innerHTML = `
+          <div style="text-align: center; color: var(--text-secondary); font-size: 13px; padding: 20px;">
+            No sessions logged yet.<br>Bro, what are you waiting for? Put in the work!
+          </div>
+        `;
+        return;
+      }
+
+      sessionLogListEl.innerHTML = '';
+      sessions.slice(0, 15).forEach(s => {
+        const item = document.createElement('div');
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.justifyContent = 'space-between';
+        item.style.padding = '12px 0';
+        item.style.borderBottom = '1px solid rgba(255, 255, 255, 0.08)';
+        const d = new Date(s.date);
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 22px;">${s.icon}</div>
+            <div>
+              <div style="font-size: 14px; font-weight: 800;">${s.name}</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">${d.toLocaleDateString()} at ${d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+            </div>
+          </div>
+          <div style="font-size: 13px; font-weight: 900; color: ${s.color};">${s.duration} min</div>
+        `;
+        sessionLogListEl.appendChild(item);
+      });
+    }
+
+    function updateSkillBreakdown() {
+      const getMins = (id) => sessions.filter(s => s.skillId === id || s.name.toLowerCase().includes(id)).reduce((a, b) => a + b.duration, 0);
+      
+      const listenM = getMins('listening');
+      const readM = getMins('reading');
+      const writeM = getMins('writing');
+      const speakM = getMins('speaking');
+
+      const targetMins = 300;
+      document.getElementById('skill-mins-listening').textContent = `${listenM}m`;
+      document.getElementById('bar-listening').style.width = `${Math.min(100, (listenM / targetMins) * 100)}%`;
+
+      document.getElementById('skill-mins-reading').textContent = `${readM}m`;
+      document.getElementById('bar-reading').style.width = `${Math.min(100, (readM / targetMins) * 100)}%`;
+
+      document.getElementById('skill-mins-writing').textContent = `${writeM}m`;
+      document.getElementById('bar-writing').style.width = `${Math.min(100, (writeM / targetMins) * 100)}%`;
+
+      document.getElementById('skill-mins-speaking').textContent = `${speakM}m`;
+      document.getElementById('bar-speaking').style.width = `${Math.min(100, (speakM / targetMins) * 100)}%`;
+    }
+
+    function calculateStreak() {
+      if (sessions.length === 0) {
+        streakCountEl.textContent = '0';
+        return;
+      }
+      const uniqueDays = new Set(sessions.map(s => new Date(s.date).toDateString()));
+      streakCountEl.textContent = uniqueDays.size;
+    }
+
+    function switchTab(tabId) {
+      AudioEngine.playClick();
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      const index = tabId === 'study' ? 0 : tabId === 'log' ? 1 : 2;
+      document.querySelectorAll('.tab-item')[index].classList.add('active');
+    }
+
+    function toggleTestSpeed() {
+      AudioEngine.playClick();
+      isFastMode = !isFastMode;
+      document.getElementById('speed-label').textContent = isFastMode ? 'ON (10 Seconds)' : 'OFF (Real Time)';
+      document.getElementById('speed-label').style.color = isFastMode ? '#34d399' : '#f87171';
+      resetTimer();
+    }
+
+    function cycleTip() {
+      AudioEngine.playClick();
+      tipIndex = (tipIndex + 1) % tips.length;
+      tipTextEl.textContent = tips[tipIndex];
+    }
+
+    function triggerFocusShortcut() {
+      AudioEngine.playClick();
+      const name = localStorage.getItem('ielts_shortcut_name') || 'Study Focus';
+      showNotification("Focus Mode Armed 🛡️", `Triggered '${name}' shortcut. Notifications dead.`, "🛡️");
+    }
+
+    function testShortcut() {
+      triggerFocusShortcut();
+    }
+
+    function simulateScreenTime() {
+      AudioEngine.playClick();
+      showNotification("Screen Time Lockdown ⏱", "Settings opened. Set 1-min limits on TikTok/Games.", "⏱");
+    }
+
+    function updateShortcutName(val) {
+      localStorage.setItem('ielts_shortcut_name', val);
+      document.getElementById('shortcut-name-disp').textContent = val;
+    }
+
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('live-time').textContent = 
+        now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }, 1000);
+
+    renderPresets();
+    resetTimer();
+    renderLogs();
+    updateLevelBadge();
+  </script>
+</body>
+</html>

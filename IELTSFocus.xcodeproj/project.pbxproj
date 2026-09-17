@@ -1,0 +1,385 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		110001 /* IELTSFocusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110002 /* IELTSFocusApp.swift */; };
+		110003 /* IELTSSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110004 /* IELTSSkill.swift */; };
+		110005 /* StudySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110006 /* StudySession.swift */; };
+		110007 /* IELTSSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110008 /* IELTSSessionType.swift */; };
+		110009 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110010 /* NotificationService.swift */; };
+		110011 /* FocusShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110012 /* FocusShortcutService.swift */; };
+		110013 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110014 /* TimerViewModel.swift */; };
+		110015 /* StreakCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110016 /* StreakCalculator.swift */; };
+		110017 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110018 /* ContentView.swift */; };
+		110019 /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110020 /* StudyView.swift */; };
+		110021 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110022 /* LogView.swift */; };
+		110023 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110024 /* SettingsView.swift */; };
+		110025 /* CircularTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110026 /* CircularTimerView.swift */; };
+		110027 /* SessionCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110028 /* SessionCompleteView.swift */; };
+		110029 /* FrictionGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110030 /* FrictionGateView.swift */; };
+		110031 /* DistractionAllowanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110032 /* DistractionAllowanceView.swift */; };
+		110033 /* ShortcutSetupGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110034 /* ShortcutSetupGuideView.swift */; };
+		110035 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110036 /* Theme.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		110000 /* IELTSFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IELTSFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		110002 /* IELTSFocusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IELTSFocusApp.swift; sourceTree = "<group>"; };
+		110004 /* IELTSSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IELTSSkill.swift; sourceTree = "<group>"; };
+		110006 /* StudySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySession.swift; sourceTree = "<group>"; };
+		110008 /* IELTSSessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IELTSSessionType.swift; sourceTree = "<group>"; };
+		110010 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		110012 /* FocusShortcutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusShortcutService.swift; sourceTree = "<group>"; };
+		110014 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
+		110016 /* StreakCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakCalculator.swift; sourceTree = "<group>"; };
+		110018 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		110020 /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
+		110022 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		110024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		110026 /* CircularTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimerView.swift; sourceTree = "<group>"; };
+		110028 /* SessionCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCompleteView.swift; sourceTree = "<group>"; };
+		110030 /* FrictionGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrictionGateView.swift; sourceTree = "<group>"; };
+		110032 /* DistractionAllowanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistractionAllowanceView.swift; sourceTree = "<group>"; };
+		110034 /* ShortcutSetupGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSetupGuideView.swift; sourceTree = "<group>"; };
+		110036 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		110037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		110038 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		110039 = {
+			isa = PBXGroup;
+			children = (
+				110040 /* IELTSFocus */,
+				110041 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		110040 /* IELTSFocus */ = {
+			isa = PBXGroup;
+			children = (
+				110002 /* IELTSFocusApp.swift */,
+				110042 /* Models */,
+				110043 /* Services */,
+				110044 /* ViewModels */,
+				110045 /* Views */,
+				110046 /* Utilities */,
+				110037 /* Info.plist */,
+			);
+			path = IELTSFocus;
+			sourceTree = "<group>";
+		};
+		110041 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				110000 /* IELTSFocus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		110042 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				110004 /* IELTSSkill.swift */,
+				110006 /* StudySession.swift */,
+				110008 /* IELTSSessionType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		110043 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				110010 /* NotificationService.swift */,
+				110012 /* FocusShortcutService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		110044 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				110014 /* TimerViewModel.swift */,
+				110016 /* StreakCalculator.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		110045 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				110018 /* ContentView.swift */,
+				110020 /* StudyView.swift */,
+				110022 /* LogView.swift */,
+				110024 /* SettingsView.swift */,
+				110047 /* Study */,
+				110048 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		110046 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				110036 /* Theme.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		110047 /* Study */ = {
+			isa = PBXGroup;
+			children = (
+				110026 /* CircularTimerView.swift */,
+				110028 /* SessionCompleteView.swift */,
+				110030 /* FrictionGateView.swift */,
+				110032 /* DistractionAllowanceView.swift */,
+			);
+			path = Study;
+			sourceTree = "<group>";
+		};
+		110048 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				110034 /* ShortcutSetupGuideView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		110049 /* IELTSFocus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 110052 /* Build configuration list for PBXNativeTarget "IELTSFocus" */;
+			buildPhases = (
+				110050 /* Sources */,
+				110038 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IELTSFocus;
+			productName = IELTSFocus;
+			productReference = 110000 /* IELTSFocus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		110051 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					110049 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = 110055 /* Build configuration list for PBXProject "IELTSFocus" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 110039;
+			productRefGroup = 110041 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				110049 /* IELTSFocus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		110050 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				110001 /* IELTSFocusApp.swift in Sources */,
+				110003 /* IELTSSkill.swift in Sources */,
+				110005 /* StudySession.swift in Sources */,
+				110007 /* IELTSSessionType.swift in Sources */,
+				110009 /* NotificationService.swift in Sources */,
+				110011 /* FocusShortcutService.swift in Sources */,
+				110013 /* TimerViewModel.swift in Sources */,
+				110015 /* StreakCalculator.swift in Sources */,
+				110017 /* ContentView.swift in Sources */,
+				110019 /* StudyView.swift in Sources */,
+				110021 /* LogView.swift in Sources */,
+				110023 /* SettingsView.swift in Sources */,
+				110025 /* CircularTimerView.swift in Sources */,
+				110027 /* SessionCompleteView.swift in Sources */,
+				110029 /* FrictionGateView.swift in Sources */,
+				110031 /* DistractionAllowanceView.swift in Sources */,
+				110033 /* ShortcutSetupGuideView.swift in Sources */,
+				110035 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		110053 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = IELTSFocus/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "IELTS Focus";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ieltsfocus.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1";
+			};
+			name = Debug;
+		};
+		110054 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = IELTSFocus/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "IELTS Focus";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ieltsfocus.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1";
+			};
+			name = Release;
+		};
+		110056 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		110057 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		110052 /* Build configuration list for PBXNativeTarget "IELTSFocus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				110053 /* Debug */,
+				110054 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		110055 /* Build configuration list for PBXProject "IELTSFocus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				110056 /* Debug */,
+				110057 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 110051 /* Project object */;
+}

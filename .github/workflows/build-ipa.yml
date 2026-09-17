@@ -1,0 +1,49 @@
+name: Build IELTS Focus IPA
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 15.4
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Build Unsigned iOS App
+        run: |
+          xcodebuild clean build \
+            -project IELTSFocus.xcodeproj \
+            -scheme IELTSFocus \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE=""
+
+      - name: Package into IPA
+        run: |
+          mkdir -p Payload
+          APP_PATH=$(find build -name "IELTSFocus.app" -type d | head -n 1)
+          if [ -z "$APP_PATH" ]; then
+            echo "Error: IELTSFocus.app not found in build directory"
+            exit 1
+          fi
+          echo "Found app bundle at $APP_PATH"
+          cp -r "$APP_PATH" Payload/
+          zip -r IELTSFocus.ipa Payload
+          echo "Successfully created IELTSFocus.ipa!"
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: IELTSFocus-IPA
+          path: IELTSFocus.ipa
+          retention-days: 7
