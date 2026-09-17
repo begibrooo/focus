@@ -47,6 +47,9 @@ struct StudyView: View {
                     // Controls (Start / Pause / Resume / Cancel)
                     controlsSection
                     
+                    // Classical Focus Music Player (Liquid Glass)
+                    ClassicalPlayerView()
+                    
                     // Exam Lock (Guided Access) Helper Banner
                     examLockBanner
                     
@@ -68,6 +71,7 @@ struct StudyView: View {
                 .onAppear {
                     AudioService.shared.playVictory()
                     AudioService.shared.speakSessionComplete(for: viewModel.selectedType)
+                    ClassicalMusicService.shared.pause()
                 }
             }
             .sheet(isPresented: $showSetupGuide) {
@@ -80,6 +84,7 @@ struct StudyView: View {
                 FrictionGateView(
                     onConfirmExit: {
                         viewModel.cancel()
+                        ClassicalMusicService.shared.pause()
                     },
                     onStayInSession: {
                         viewModel.resume()
@@ -161,6 +166,7 @@ struct StudyView: View {
         } else {
             AudioService.shared.playClick()
             viewModel.cancel()
+            ClassicalMusicService.shared.pause()
         }
     }
     
@@ -345,6 +351,9 @@ struct StudyView: View {
                     AudioService.shared.playStartBell()
                     AudioService.shared.speakSessionStart(for: viewModel.selectedType)
                     viewModel.start()
+                    if ClassicalMusicService.shared.autoPlayOnStudyStart {
+                        ClassicalMusicService.shared.play()
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "lock.fill")

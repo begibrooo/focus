@@ -526,6 +526,62 @@
       box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4);
     }
 
+    /* Music Widget & Equalizer */
+    .music-ctrl-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+    .music-ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+    .music-ctrl-btn.play-active {
+      background: #38bdf8;
+      color: #030712;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+    .music-wave {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+    .wave-bar {
+      width: 2.5px;
+      background: #38bdf8;
+      border-radius: 1px;
+      animation: waveJump 0.6s ease-in-out infinite alternate;
+    }
+    .wave-bar:nth-child(1) { height: 4px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(2) { height: 11px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(3) { height: 6px; animation-delay: 0.2s; }
+    @keyframes waveJump {
+      0% { height: 3px; }
+      100% { height: 12px; }
+    }
+    .island-eq-bar {
+      width: 2px;
+      background: #38bdf8;
+      border-radius: 1px;
+      animation: eqBounce 0.5s ease-in-out infinite alternate;
+    }
+    .island-eq-bar.bar-1 { height: 4px; animation-delay: 0.05s; }
+    .island-eq-bar.bar-2 { height: 10px; animation-delay: 0.25s; }
+    .island-eq-bar.bar-3 { height: 6px; animation-delay: 0.15s; }
+    @keyframes eqBounce {
+      0% { height: 2px; }
+      100% { height: 9px; }
+    }
+
     /* Floating Liquid Tab Bar (VisionOS / iOS 18 Specular Glass) */
     .tab-bar-container {
       position: absolute;
@@ -836,6 +892,13 @@
             <span id="island-icon" style="font-size: 13px;">📖</span>
             <span id="island-skill-text" style="color: #94a3b8; font-size: 11px;">Reading</span>
           </div>
+          <!-- Dynamic Island Mini Equalizer -->
+          <div id="island-music-eq" style="display: none; align-items: center; gap: 2px; background: rgba(56, 189, 248, 0.18); padding: 2px 6px; border-radius: 99px;">
+            <span style="font-size: 9px; margin-right: 1px;">🎵</span>
+            <div class="island-eq-bar bar-1"></div>
+            <div class="island-eq-bar bar-2"></div>
+            <div class="island-eq-bar bar-3"></div>
+          </div>
           <div style="display: flex; align-items: center; gap: 6px;">
             <span id="island-time-text" style="color: var(--reading); font-variant-numeric: tabular-nums;">59:45</span>
             <div style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; animation: pulseGlow 1.5s infinite;"></div>
@@ -906,6 +969,31 @@
               <button id="start-btn" class="btn btn-primary" onclick="startTimer()">
                 <span>🔒 Lock In: Start Session</span>
               </button>
+            </div>
+          </div>
+
+          <!-- Classical Music Focus Player (Liquid Glass) -->
+          <div class="liquid-glass banner" style="padding: 12px 14px; margin-top: 2px;">
+            <div class="banner-left" onclick="openMusicPickerModal()" style="cursor: pointer; flex: 1; min-width: 0;">
+              <div class="icon-badge" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15); width: 42px; height: 42px; font-size: 18px; flex-shrink: 0;">
+                <span id="music-icon">🎹</span>
+              </div>
+              <div style="overflow: hidden; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span id="music-title" style="font-size: 13px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nocturne Op. 9 No. 2</span>
+                  <div id="music-wave" class="music-wave" style="display: none;">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                  </div>
+                </div>
+                <div id="music-composer" style="font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Frédéric Chopin • Focus</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px; margin-left: 8px; flex-shrink: 0;">
+              <button onclick="prevMusicTrack(event)" class="music-ctrl-btn" title="Previous">⏮</button>
+              <button id="music-play-btn" onclick="toggleClassicalMusic(event)" class="music-ctrl-btn" title="Play/Pause">▶</button>
+              <button onclick="nextMusicTrack(event)" class="music-ctrl-btn" title="Next">⏭</button>
             </div>
           </div>
 
@@ -1380,6 +1468,32 @@
         </div>
       </div>
 
+      <!-- CLASSICAL MUSIC TRACK PICKER MODAL -->
+      <div id="music-modal" class="modal-overlay">
+        <div class="modal-sheet">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 18px; font-weight: 900; color: #fff;">Classical Focus Tracks 🎻</div>
+            <button onclick="closeMusicPickerModal()" style="background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 4px;">✕</button>
+          </div>
+          <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.4;">
+            Curated classical masterworks to induce alpha-wave flow states. Includes smart ducking: music automatically drops to 20% volume when Strict Bro coaches you!
+          </div>
+
+          <div id="music-tracks-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; max-height: 280px; overflow-y: auto;">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: rgba(255, 255, 255, 0.05); border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 14px;">
+            <span style="font-size: 13px; font-weight: 700; color: #fff;">Auto-play when focus starts</span>
+            <input type="checkbox" id="music-autoplay-toggle" checked style="width: 18px; height: 18px; accent-color: #38bdf8; cursor: pointer;">
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%;" onclick="closeMusicPickerModal()">
+            Done
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1411,6 +1525,7 @@
       playStartBell() {
         if (!this.isEnabled()) return;
         this.init();
+        if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.duck(1.5);
         [523.25, 659.25, 783.99].forEach((freq, i) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
@@ -1426,6 +1541,7 @@
       playBuzzer() {
         if (!this.isEnabled()) return;
         this.init();
+        if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.duck(2.0);
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sawtooth';
@@ -1438,6 +1554,7 @@
       playVictory() {
         if (!this.isEnabled()) return;
         this.init();
+        if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.duck(2.5);
         [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
@@ -1453,6 +1570,7 @@
       playSiren() {
         if (!this.isEnabled()) return;
         this.init();
+        if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.duck(2.5);
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sawtooth';
@@ -1466,8 +1584,300 @@
         gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
         osc.connect(gain); gain.connect(this.ctx.destination);
         osc.start(now); osc.stop(now + 0.9);
+      },
+      speak(text) {
+        if (!this.isEnabled()) return;
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.duck(3.5);
+          const utt = new SpeechSynthesisUtterance(text);
+          utt.rate = 1.05;
+          utt.pitch = 0.92;
+          utt.onend = () => {
+            if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.unduck();
+          };
+          window.speechSynthesis.speak(utt);
+        }
       }
     };
+
+    // Classical Focus Music Player Engine
+    const ClassicalPlayer = {
+      tracks: [
+        {
+          id: 'chopin-nocturne',
+          title: 'Nocturne Op. 9 No. 2',
+          composer: 'Frédéric Chopin',
+          icon: '🎹',
+          url: 'https://ia800504.us.archive.org/11/items/FredericChopinNocturneOp.9No.2/FredericChopin-NocturneOp.9No.2.mp3',
+          desc: 'Calm flowing piano for deep reading and essay writing.'
+        },
+        {
+          id: 'bach-air',
+          title: 'Air on the G String',
+          composer: 'J.S. Bach',
+          icon: '🎻',
+          url: 'https://ia800301.us.archive.org/29/items/AirOnTheGString_667/AirOnTheGString.mp3',
+          desc: 'Baroque harmony for structured logic and analysis.'
+        },
+        {
+          id: 'mozart-k545',
+          title: 'Sonata in C Major K.545',
+          composer: 'W.A. Mozart',
+          icon: '🎼',
+          url: 'https://ia800303.us.archive.org/2/items/MozartPianoSonata16InCMajorK545/01Allegro.mp3',
+          desc: 'Classic Mozart Effect for cognitive clarity and speed.'
+        },
+        {
+          id: 'beethoven-moonlight',
+          title: 'Moonlight Sonata',
+          composer: 'Ludwig van Beethoven',
+          icon: '🌙',
+          url: 'https://ia800301.us.archive.org/15/items/MoonlightSonata_853/MoonlightSonata.mp3',
+          desc: 'Atmospheric and hypnotic for total immersion.'
+        },
+        {
+          id: 'satie-gymnopedie',
+          title: 'Gymnopédie No. 1',
+          composer: 'Erik Satie',
+          icon: '✨',
+          url: 'https://ia800301.us.archive.org/13/items/GymnopedieNo1_976/GymnopedieNo1.mp3',
+          desc: 'Minimalist ambient piano for calm focus.'
+        }
+      ],
+      currentIndex: 0,
+      isPlaying: false,
+      audio: null,
+      synthTimer: null,
+      unduckTimer: null,
+      baseVolume: 0.65,
+
+      init() {
+        this.renderTrackModal();
+        this.updateUI();
+      },
+
+      getCurrentTrack() {
+        return this.tracks[this.currentIndex];
+      },
+
+      play() {
+        this.isPlaying = true;
+        const track = this.getCurrentTrack();
+
+        if (!this.audio) {
+          this.audio = new Audio();
+          this.audio.crossOrigin = 'anonymous';
+          this.audio.loop = true;
+          this.audio.volume = this.baseVolume;
+          this.audio.onerror = () => {
+            console.log('Stream unreachable, starting Web Audio classical synth harmony');
+            this.startSynthClassical();
+          };
+        }
+
+        this.stopSynthClassical();
+        this.audio.src = track.url;
+        const playPromise = this.audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            this.startSynthClassical();
+          });
+        }
+
+        this.updateUI();
+      },
+
+      pause() {
+        this.isPlaying = false;
+        if (this.audio) {
+          this.audio.pause();
+        }
+        this.stopSynthClassical();
+        this.updateUI();
+      },
+
+      toggle() {
+        if (this.isPlaying) {
+          this.pause();
+        } else {
+          this.play();
+        }
+      },
+
+      next() {
+        this.currentIndex = (this.currentIndex + 1) % this.tracks.length;
+        if (this.isPlaying) {
+          this.play();
+        } else {
+          this.updateUI();
+        }
+        this.renderTrackModal();
+      },
+
+      prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.tracks.length) % this.tracks.length;
+        if (this.isPlaying) {
+          this.play();
+        } else {
+          this.updateUI();
+        }
+        this.renderTrackModal();
+      },
+
+      selectTrack(index) {
+        this.currentIndex = index;
+        this.play();
+        this.renderTrackModal();
+        closeMusicPickerModal();
+      },
+
+      duck(durationSec = 2.0) {
+        if (!this.isPlaying) return;
+        if (this.audio) {
+          this.audio.volume = 0.15;
+        }
+        clearTimeout(this.unduckTimer);
+        this.unduckTimer = setTimeout(() => {
+          this.unduck();
+        }, durationSec * 1000);
+      },
+
+      unduck() {
+        if (!this.isPlaying) return;
+        if (this.audio) {
+          let current = this.audio.volume;
+          const step = 0.05;
+          const fade = setInterval(() => {
+            current = Math.min(this.baseVolume, current + step);
+            if (this.audio) this.audio.volume = current;
+            if (current >= this.baseVolume) clearInterval(fade);
+          }, 50);
+        }
+      },
+
+      startSynthClassical() {
+        if (this.synthTimer) return;
+        AudioEngine.init();
+        const chords = [
+          [311.13, 392.00, 466.16, 622.25], // Eb Major
+          [261.63, 329.63, 392.00, 523.25], // C minor
+          [293.66, 349.23, 440.00, 587.33], // F minor
+          [233.08, 293.66, 349.23, 466.16]  // Bb Major
+        ];
+        let chordIdx = 0;
+        let noteIdx = 0;
+        this.synthTimer = setInterval(() => {
+          if (!this.isPlaying || !AudioEngine.ctx) return;
+          const freq = chords[chordIdx][noteIdx];
+          const osc = AudioEngine.ctx.createOscillator();
+          const gain = AudioEngine.ctx.createGain();
+          osc.type = 'sine';
+          const now = AudioEngine.ctx.currentTime;
+          osc.frequency.setValueAtTime(freq, now);
+          const vol = this.audio && this.audio.volume < 0.3 ? 0.03 : 0.12;
+          gain.gain.setValueAtTime(vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+          osc.connect(gain);
+          gain.connect(AudioEngine.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 1.25);
+
+          noteIdx++;
+          if (noteIdx >= chords[chordIdx].length) {
+            noteIdx = 0;
+            chordIdx = (chordIdx + 1) % chords.length;
+          }
+        }, 320);
+      },
+
+      stopSynthClassical() {
+        if (this.synthTimer) {
+          clearInterval(this.synthTimer);
+          this.synthTimer = null;
+        }
+      },
+
+      updateUI() {
+        const track = this.getCurrentTrack();
+        const iconEl = document.getElementById('music-icon');
+        const titleEl = document.getElementById('music-title');
+        const composerEl = document.getElementById('music-composer');
+        const playBtnEl = document.getElementById('music-play-btn');
+        const waveEl = document.getElementById('music-wave');
+        const islandEqEl = document.getElementById('island-music-eq');
+
+        if (iconEl) iconEl.textContent = track.icon;
+        if (titleEl) titleEl.textContent = track.title;
+        if (composerEl) composerEl.textContent = `${track.composer} • Focus`;
+
+        if (playBtnEl) {
+          playBtnEl.innerHTML = this.isPlaying ? '⏸' : '▶';
+          if (this.isPlaying) {
+            playBtnEl.classList.add('play-active');
+          } else {
+            playBtnEl.classList.remove('play-active');
+          }
+        }
+
+        if (waveEl) waveEl.style.display = this.isPlaying ? 'inline-flex' : 'none';
+        if (islandEqEl) islandEqEl.style.display = (this.isPlaying && timerState === 'running') ? 'flex' : 'none';
+      },
+
+      renderTrackModal() {
+        const listEl = document.getElementById('music-tracks-list');
+        if (!listEl) return;
+        listEl.innerHTML = '';
+        this.tracks.forEach((t, idx) => {
+          const isSelected = idx === this.currentIndex;
+          const card = document.createElement('div');
+          card.style.cssText = `
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 12px; border-radius: 12px; cursor: pointer;
+            background: ${isSelected ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.05)'};
+            border: 1px solid ${isSelected ? '#38bdf8' : 'rgba(255, 255, 255, 0.08)'};
+            transition: all 0.2s ease;
+          `;
+          card.onclick = () => this.selectTrack(idx);
+          card.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 20px;">${t.icon}</span>
+              <div>
+                <div style="font-size: 13px; font-weight: 800; color: ${isSelected ? '#38bdf8' : '#fff'};">${t.title}</div>
+                <div style="font-size: 11px; color: #94a3b8;">${t.composer} — ${t.desc}</div>
+              </div>
+            </div>
+            <span style="font-size: 13px; color: ${isSelected ? '#38bdf8' : '#64748b'};">${isSelected ? (this.isPlaying ? '▶ Playing' : '✓ Selected') : ''}</span>
+          `;
+          listEl.appendChild(card);
+        });
+      }
+    };
+
+    function toggleClassicalMusic(e) {
+      if (e) e.stopPropagation();
+      AudioEngine.playClick();
+      ClassicalPlayer.toggle();
+    }
+    function nextMusicTrack(e) {
+      if (e) e.stopPropagation();
+      AudioEngine.playClick();
+      ClassicalPlayer.next();
+    }
+    function prevMusicTrack(e) {
+      if (e) e.stopPropagation();
+      AudioEngine.playClick();
+      ClassicalPlayer.prev();
+    }
+    function openMusicPickerModal() {
+      AudioEngine.playClick();
+      ClassicalPlayer.renderTrackModal();
+      document.getElementById('music-modal').classList.add('active');
+    }
+    function closeMusicPickerModal() {
+      AudioEngine.playClick();
+      document.getElementById('music-modal').classList.remove('active');
+    }
 
     // Presets
     const presets = [
@@ -1545,6 +1955,7 @@
     function resetTimer() {
       clearInterval(timerInterval);
       timerState = 'idle';
+      if (typeof ClassicalPlayer !== 'undefined') ClassicalPlayer.pause();
       totalSeconds = isFastMode ? 10 : currentPreset.mins * 60;
       remainingSeconds = totalSeconds;
       updateTimerDisplay();
@@ -1576,6 +1987,11 @@
     }
 
     function updateDynamicIsland() {
+      const islandEqEl = document.getElementById('island-music-eq');
+      if (islandEqEl && typeof ClassicalPlayer !== 'undefined') {
+        islandEqEl.style.display = (ClassicalPlayer.isPlaying && timerState === 'running') ? 'flex' : 'none';
+      }
+
       if (timerState === 'running') {
         dynamicIslandEl.classList.add('active-live');
         const mins = Math.floor(remainingSeconds / 60);
@@ -1623,6 +2039,11 @@
       dynamicIslandEl.classList.add('expanded');
       setTimeout(() => dynamicIslandEl.classList.remove('expanded'), 2200);
       
+      const autoPlayMusic = document.getElementById('music-autoplay-toggle')?.checked ?? true;
+      if (autoPlayMusic && typeof ClassicalPlayer !== 'undefined' && !ClassicalPlayer.isPlaying) {
+        ClassicalPlayer.play();
+      }
+
       renderControls();
       renderPresets();
       updateTimerDisplay();
@@ -2170,6 +2591,7 @@
     resetTimer();
     renderLogs();
     updateLevelBadge();
+    ClassicalPlayer.init();
   </script>
 </body>
 </html>

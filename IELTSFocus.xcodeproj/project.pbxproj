@@ -28,6 +28,8 @@
 		110060 /* ExamLockGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110061 /* ExamLockGuideView.swift */; };
 		110062 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110063 /* AudioService.swift */; };
 		110064 /* DynamicIslandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110065 /* DynamicIslandView.swift */; };
+		110066 /* ClassicalMusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110067 /* ClassicalMusicService.swift */; };
+		110068 /* ClassicalPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110069 /* ClassicalPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		110061 /* ExamLockGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamLockGuideView.swift; sourceTree = "<group>"; };
 		110063 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 		110065 /* DynamicIslandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicIslandView.swift; sourceTree = "<group>"; };
+		110067 /* ClassicalMusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicalMusicService.swift; sourceTree = "<group>"; };
+		110069 /* ClassicalPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicalPlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,7 @@
 				110010 /* NotificationService.swift */,
 				110012 /* FocusShortcutService.swift */,
 				110063 /* AudioService.swift */,
+				110067 /* ClassicalMusicService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 				110032 /* DistractionAllowanceView.swift */,
 				110061 /* ExamLockGuideView.swift */,
 				110065 /* DynamicIslandView.swift */,
+				110069 /* ClassicalPlayerView.swift */,
 			);
 			path = Study;
 			sourceTree = "<group>";
@@ -246,6 +252,8 @@
 				110060 /* ExamLockGuideView.swift in Sources */,
 				110062 /* AudioService.swift in Sources */,
 				110064 /* DynamicIslandView.swift in Sources */,
+				110066 /* ClassicalMusicService.swift in Sources */,
+				110068 /* ClassicalPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

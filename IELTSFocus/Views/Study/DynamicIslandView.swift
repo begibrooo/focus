@@ -2,7 +2,9 @@ import SwiftUI
 
 struct DynamicIslandView: View {
     @Bindable var viewModel: TimerViewModel
+    @State private var musicService = ClassicalMusicService.shared
     @State private var isPulsing: Bool = false
+    @State private var eqHeights: [CGFloat] = [4, 11, 7]
     
     private var isVisible: Bool {
         viewModel.timerState == .running || viewModel.timerState == .paused
@@ -34,6 +36,30 @@ struct DynamicIslandView: View {
                             .font(.system(size: 13, weight: .bold))
                             .foregroundStyle(.white)
                             .lineLimit(1)
+                    }
+                    
+                    Spacer()
+                    
+                    // Center: Classical Music Mini Visualizer
+                    if musicService.isPlaying {
+                        HStack(spacing: 3) {
+                            Image(systemName: "music.note")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(Color.cyan)
+                            
+                            HStack(spacing: 2) {
+                                ForEach(0..<3) { i in
+                                    RoundedRectangle(cornerRadius: 1)
+                                        .fill(Color.cyan)
+                                        .frame(width: 2.5, height: eqHeights[i])
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.cyan.opacity(0.18))
+                        .clipShape(Capsule())
+                        .transition(.scale.combined(with: .opacity))
                     }
                     
                     Spacer()
@@ -87,6 +113,20 @@ struct DynamicIslandView: View {
                 withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
                     isPulsing = true
                 }
+                startEqualizerAnimation()
+            }
+        }
+    }
+    
+    private func startEqualizerAnimation() {
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
+            guard musicService.isPlaying else { return }
+            withAnimation(.easeInOut(duration: 0.25)) {
+                eqHeights = [
+                    CGFloat.random(in: 3...12),
+                    CGFloat.random(in: 4...14),
+                    CGFloat.random(in: 3...10)
+                ]
             }
         }
     }

@@ -68,6 +68,9 @@ final class AudioService: NSObject, AVSpeechSynthesizerDelegate {
         utterance.volume = 1.0
         utterance.preUtteranceDelay = 0.05
         
+        // Duck background classical music while Strict Bro speaks
+        ClassicalMusicService.shared.duckForVoice(duration: Double(text.count) * 0.08 + 1.5)
+        
         speechSynthesizer.speak(utterance)
     }
     
