@@ -3,6 +3,8 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("focusShortcutName") private var focusShortcutName: String = "Study Focus"
     @AppStorage("enableFrictionGate") private var enableFrictionGate: Bool = true
+    @AppStorage("enableVoiceCoach") private var enableVoiceCoach: Bool = true
+    @AppStorage("enableSoundEffects") private var enableSoundEffects: Bool = true
     
     // Daily Study Reminder Settings
     @AppStorage("dailyReminderEnabled") private var dailyReminderEnabled: Bool = false
@@ -16,6 +18,45 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                // Strict Bro Voice Coach & Audio FX
+                Section {
+                    Toggle("Strict Bro Voice Coach 🗣️", isOn: $enableVoiceCoach)
+                    Toggle("Boxing Bells & Sound Effects 🔔", isOn: $enableSoundEffects)
+                    
+                    Button {
+                        AudioService.shared.speakTestVoice()
+                    } label: {
+                        HStack {
+                            Image(systemName: "speaker.wave.3.fill")
+                                .foregroundStyle(.blue)
+                            Text("Test Voice Aloud (Hear Strict Bro)")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Image(systemName: "play.circle.fill")
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                    
+                    Button {
+                        AudioService.shared.playStartBell()
+                    } label: {
+                        HStack {
+                            Image(systemName: "bell.badge.fill")
+                                .foregroundStyle(.orange)
+                            Text("Test Boxing Bell 🔔")
+                                .foregroundStyle(.primary)
+                            Spacer()
+                            Image(systemName: "play.circle.fill")
+                                .foregroundStyle(.orange)
+                        }
+                    }
+                } header: {
+                    Text("Strict Bro Voice & Audio (Plays in Silent Mode)")
+                } footer: {
+                    Text("Strict Bro speaks tough love out loud when starting, pausing, and finishing sessions to keep you accountable.")
+                }
+                
                 // Daily Study Reminder Section
                 Section {
                     Toggle("Daily Study Reminder", isOn: $dailyReminderEnabled)

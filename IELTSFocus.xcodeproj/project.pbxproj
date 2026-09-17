@@ -26,6 +26,7 @@
 		110033 /* ShortcutSetupGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110034 /* ShortcutSetupGuideView.swift */; };
 		110035 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110036 /* Theme.swift */; };
 		110060 /* ExamLockGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110061 /* ExamLockGuideView.swift */; };
+		110062 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110063 /* AudioService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		110036 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		110037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		110061 /* ExamLockGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamLockGuideView.swift; sourceTree = "<group>"; };
+		110063 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				110010 /* NotificationService.swift */,
 				110012 /* FocusShortcutService.swift */,
+				110063 /* AudioService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				110033 /* ShortcutSetupGuideView.swift in Sources */,
 				110035 /* Theme.swift in Sources */,
 				110060 /* ExamLockGuideView.swift in Sources */,
+				110062 /* AudioService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

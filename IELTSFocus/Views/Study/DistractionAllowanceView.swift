@@ -469,6 +469,8 @@ struct DistractionAllowanceView: View {
             disciplineXP = max(0, disciplineXP - 50)
             isPassActive = false
             NotificationService.shared.cancelDistractionBreakAlert()
+            AudioService.shared.playBuzzer()
+            AudioService.shared.speakReturnLate(overtimeMinutes: max(1, actualMinutesTaken - activePassAllowedMinutes))
             showReturnCheckIn = true
         } else {
             // Still in progress
@@ -484,6 +486,9 @@ struct DistractionAllowanceView: View {
         activePassStartTime = Date().timeIntervalSince1970
         isPassActive = true
         remainingSeconds = selectedMinutes * 60
+        
+        AudioService.shared.playClick()
+        AudioService.shared.speakGamePassStart(appName: selectedAppName, minutes: selectedMinutes)
         
         // Schedule notification alarm
         NotificationService.shared.scheduleDistractionBreakAlert(afterMinutes: selectedMinutes)
@@ -504,6 +509,8 @@ struct DistractionAllowanceView: View {
                 remainingSeconds -= 1
             } else {
                 timer.invalidate()
+                AudioService.shared.playBuzzer()
+                AudioService.shared.speakGamePassExpired(appName: activePassTargetApp)
             }
         }
     }
@@ -517,6 +524,8 @@ struct DistractionAllowanceView: View {
         disciplineXP += 30
         isPassActive = false
         NotificationService.shared.cancelDistractionBreakAlert()
+        AudioService.shared.playVictory()
+        AudioService.shared.speakReturnOnTime()
         showReturnCheckIn = true
     }
 }

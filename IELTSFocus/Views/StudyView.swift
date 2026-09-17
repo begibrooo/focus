@@ -60,6 +60,10 @@ struct StudyView: View {
                     saveCompletedSession()
                     viewModel.dismissCompletion()
                 }
+                .onAppear {
+                    AudioService.shared.playVictory()
+                    AudioService.shared.speakSessionComplete(for: viewModel.selectedType)
+                }
             }
             .sheet(isPresented: $showSetupGuide) {
                 ShortcutSetupGuideView(shortcutName: focusShortcutName.isEmpty ? "Study Focus" : focusShortcutName)
@@ -132,6 +136,8 @@ struct StudyView: View {
                     abandonmentDuration = elapsed
                     disciplineXP = max(0, disciplineXP - 25)
                     slackerStrikes = min(3, slackerStrikes + 1)
+                    AudioService.shared.playBuzzer()
+                    AudioService.shared.speakAbandonmentBust(secondsAway: elapsed)
                     showAbandonmentBust = true
                 }
             } else {
@@ -143,9 +149,12 @@ struct StudyView: View {
     
     private func handleCancelTap() {
         if enableFrictionGate && (viewModel.timerState == .running || viewModel.timerState == .paused) {
+            AudioService.shared.playBuzzer()
+            AudioService.shared.speakFrictionWarning()
             viewModel.pause()
             showFrictionGate = true
         } else {
+            AudioService.shared.playClick()
             viewModel.cancel()
         }
     }
@@ -328,6 +337,8 @@ struct StudyView: View {
         HStack(spacing: 16) {
             if viewModel.timerState == .idle {
                 Button {
+                    AudioService.shared.playStartBell()
+                    AudioService.shared.speakSessionStart(for: viewModel.selectedType)
                     viewModel.start()
                 } label: {
                     HStack {
@@ -357,8 +368,12 @@ struct StudyView: View {
                 // Pause / Resume Button
                 Button {
                     if viewModel.timerState == .running {
+                        AudioService.shared.playClick()
+                        AudioService.shared.speakSessionPause()
                         viewModel.pause()
                     } else {
+                        AudioService.shared.playStartBell()
+                        AudioService.shared.speakSessionResume()
                         viewModel.resume()
                     }
                 } label: {
