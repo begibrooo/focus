@@ -976,18 +976,18 @@
           <div class="liquid-glass banner" style="padding: 12px 14px; margin-top: 2px;">
             <div class="banner-left" onclick="openMusicPickerModal()" style="cursor: pointer; flex: 1; min-width: 0;">
               <div class="icon-badge" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15); width: 42px; height: 42px; font-size: 18px; flex-shrink: 0;">
-                <span id="music-icon">🎹</span>
+                <span id="music-icon">🌙</span>
               </div>
               <div style="overflow: hidden; min-width: 0;">
                 <div style="display: flex; align-items: center; gap: 6px;">
-                  <span id="music-title" style="font-size: 13px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nocturne Op. 9 No. 2</span>
+                  <span id="music-title" style="font-size: 13px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Clair de Lune</span>
                   <div id="music-wave" class="music-wave" style="display: none;">
                     <div class="wave-bar"></div>
                     <div class="wave-bar"></div>
                     <div class="wave-bar"></div>
                   </div>
                 </div>
-                <div id="music-composer" style="font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Frédéric Chopin • Focus</div>
+                <div id="music-composer" style="font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Claude Debussy • Calm Focus</div>
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 6px; margin-left: 8px; flex-shrink: 0;">
@@ -1602,47 +1602,56 @@
     };
 
     // Classical Focus Music Player Engine
+    // Classical Focus Music Player Engine (Ultra-Calming, Zero-Stress)
     const ClassicalPlayer = {
       tracks: [
         {
-          id: 'chopin-nocturne',
-          title: 'Nocturne Op. 9 No. 2',
-          composer: 'Frédéric Chopin',
-          icon: '🎹',
-          url: 'https://ia800504.us.archive.org/11/items/FredericChopinNocturneOp.9No.2/FredericChopin-NocturneOp.9No.2.mp3',
-          desc: 'Calm flowing piano for deep reading and essay writing.'
-        },
-        {
-          id: 'bach-air',
-          title: 'Air on the G String',
-          composer: 'J.S. Bach',
-          icon: '🎻',
-          url: 'https://ia800301.us.archive.org/29/items/AirOnTheGString_667/AirOnTheGString.mp3',
-          desc: 'Baroque harmony for structured logic and analysis.'
-        },
-        {
-          id: 'mozart-k545',
-          title: 'Sonata in C Major K.545',
-          composer: 'W.A. Mozart',
-          icon: '🎼',
-          url: 'https://ia800303.us.archive.org/2/items/MozartPianoSonata16InCMajorK545/01Allegro.mp3',
-          desc: 'Classic Mozart Effect for cognitive clarity and speed.'
-        },
-        {
-          id: 'beethoven-moonlight',
-          title: 'Moonlight Sonata',
-          composer: 'Ludwig van Beethoven',
+          id: 'debussy-clair-de-lune',
+          title: 'Clair de Lune',
+          composer: 'Claude Debussy',
           icon: '🌙',
-          url: 'https://ia800301.us.archive.org/15/items/MoonlightSonata_853/MoonlightSonata.mp3',
-          desc: 'Atmospheric and hypnotic for total immersion.'
+          url: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/be/Clair_de_lune_%28Claude_Debussy%29_Suite_bergamasque.ogg/Clair_de_lune_%28Claude_Debussy%29_Suite_bergamasque.ogg.mp3',
+          desc: 'Deeply calming impressionist piano for effortless reading and essay writing.'
         },
         {
           id: 'satie-gymnopedie',
           title: 'Gymnopédie No. 1',
           composer: 'Erik Satie',
           icon: '✨',
-          url: 'https://ia800301.us.archive.org/13/items/GymnopedieNo1_976/GymnopedieNo1.mp3',
-          desc: 'Minimalist ambient piano for calm focus.'
+          url: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/9/90/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg.mp3',
+          desc: 'Ultra-peaceful, slow ambient piano. Completely eliminates study stress.'
+        },
+        {
+          id: 'pachelbel-canon',
+          title: 'Canon in D Major',
+          composer: 'Johann Pachelbel',
+          icon: '🎻',
+          url: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/Pachelbel%27s_Canon.ogg/Pachelbel%27s_Canon.ogg.mp3',
+          desc: 'Soothing harmonic strings, iconic calming cadence for zero-anxiety focus.'
+        },
+        {
+          id: 'chopin-nocturne',
+          title: 'Nocturne in E-Flat (Op. 9 No. 2)',
+          composer: 'Frédéric Chopin',
+          icon: '🎹',
+          url: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Nocturne_in_E_flat_major%2C_Op._9_no._2.mp3',
+          desc: 'Gentle romantic night piano. Soft, delicate, and relaxing.'
+        },
+        {
+          id: 'bach-air',
+          title: 'Air on the G String',
+          composer: 'J.S. Bach',
+          icon: '🎼',
+          url: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Air_-_Air_Force_Strings_-_United_States_Air_Force_Band.mp3',
+          desc: 'Smooth, serene baroque strings that steady the mind and heart rate.'
+        },
+        {
+          id: 'beethoven-fur-elise',
+          title: 'Für Elise (Poco Moto)',
+          composer: 'Ludwig van Beethoven',
+          icon: '🎹',
+          url: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/8/8f/Fur_Elise.ogg/Fur_Elise.ogg.mp3',
+          desc: 'Soft, nostalgic piano melody that encourages steady, calm concentration.'
         }
       ],
       currentIndex: 0,
@@ -1671,7 +1680,7 @@
           this.audio.loop = true;
           this.audio.volume = this.baseVolume;
           this.audio.onerror = () => {
-            console.log('Stream unreachable, starting Web Audio classical synth harmony');
+            console.log('Stream unreachable, starting warm ambient piano pad');
             this.startSynthClassical();
           };
         }
@@ -1756,39 +1765,56 @@
         }
       },
 
+      // Warm, ultra-peaceful ambient felt piano chords (Zero stress, pure relaxation)
       startSynthClassical() {
         if (this.synthTimer) return;
         AudioEngine.init();
-        const chords = [
-          [311.13, 392.00, 466.16, 622.25], // Eb Major
-          [261.63, 329.63, 392.00, 523.25], // C minor
-          [293.66, 349.23, 440.00, 587.33], // F minor
-          [233.08, 293.66, 349.23, 466.16]  // Bb Major
+        if (!AudioEngine.ctx) return;
+
+        // Lush, calming 7th and 9th chords: Ebmaj9, Cm9, Abmaj7, Bb7sus4
+        const chordProgressions = [
+          [155.56, 311.13, 392.00, 466.16, 587.33], // Ebmaj9
+          [130.81, 261.63, 311.13, 392.00, 466.16], // Cm9
+          [103.83, 207.65, 261.63, 311.13, 392.00], // Abmaj7
+          [116.54, 233.08, 349.23, 466.16, 523.25]  // Bb7sus4
         ];
         let chordIdx = 0;
-        let noteIdx = 0;
-        this.synthTimer = setInterval(() => {
-          if (!this.isPlaying || !AudioEngine.ctx) return;
-          const freq = chords[chordIdx][noteIdx];
-          const osc = AudioEngine.ctx.createOscillator();
-          const gain = AudioEngine.ctx.createGain();
-          osc.type = 'sine';
-          const now = AudioEngine.ctx.currentTime;
-          osc.frequency.setValueAtTime(freq, now);
-          const vol = this.audio && this.audio.volume < 0.3 ? 0.03 : 0.12;
-          gain.gain.setValueAtTime(vol, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-          osc.connect(gain);
-          gain.connect(AudioEngine.ctx.destination);
-          osc.start(now);
-          osc.stop(now + 1.25);
 
-          noteIdx++;
-          if (noteIdx >= chords[chordIdx].length) {
-            noteIdx = 0;
-            chordIdx = (chordIdx + 1) % chords.length;
-          }
-        }, 320);
+        const playWarmChord = () => {
+          if (!this.isPlaying || !AudioEngine.ctx) return;
+          const notes = chordProgressions[chordIdx];
+          const now = AudioEngine.ctx.currentTime;
+
+          // Low-pass filter for soft, warm felt-piano sound
+          const filter = AudioEngine.ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(550, now);
+          filter.Q.setValueAtTime(1.0, now);
+
+          const masterGain = AudioEngine.ctx.createGain();
+          const targetVol = (this.audio && this.audio.volume < 0.3) ? 0.03 : 0.09;
+          masterGain.gain.setValueAtTime(0.001, now);
+          masterGain.gain.exponentialRampToValueAtTime(targetVol, now + 0.5);
+          masterGain.gain.exponentialRampToValueAtTime(0.001, now + 4.8);
+
+          filter.connect(masterGain);
+          masterGain.connect(AudioEngine.ctx.destination);
+
+          // Play peaceful chord voicing
+          notes.forEach((freq, idx) => {
+            const osc = AudioEngine.ctx.createOscillator();
+            osc.type = (idx === 0) ? 'sine' : 'triangle';
+            osc.frequency.setValueAtTime(freq, now + (idx * 0.05));
+            osc.connect(filter);
+            osc.start(now + (idx * 0.05));
+            osc.stop(now + 4.9);
+          });
+
+          chordIdx = (chordIdx + 1) % chordProgressions.length;
+        };
+
+        playWarmChord();
+        this.synthTimer = setInterval(playWarmChord, 4800);
       },
 
       stopSynthClassical() {

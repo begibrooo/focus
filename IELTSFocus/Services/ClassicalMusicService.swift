@@ -18,44 +18,52 @@ final class ClassicalMusicService: NSObject {
     
     let tracks: [ClassicalTrack] = [
         ClassicalTrack(
-            id: "chopin-nocturne",
-            title: "Nocturne in E-Flat (Op. 9 No. 2)",
-            composer: "Frédéric Chopin",
-            icon: "pianokeys.inverse",
-            streamURLString: "https://ia800504.us.archive.org/11/items/FredericChopinNocturneOp.9No.2/FredericChopin-NocturneOp.9No.2.mp3",
-            description: "Calm, flowing piano for deep reading and essay writing."
-        ),
-        ClassicalTrack(
-            id: "bach-air",
-            title: "Air on the G String",
-            composer: "J.S. Bach",
-            icon: "guitars.fill",
-            streamURLString: "https://ia800301.us.archive.org/29/items/AirOnTheGString_667/AirOnTheGString.mp3",
-            description: "Baroque harmony that stimulates mathematical and analytical focus."
-        ),
-        ClassicalTrack(
-            id: "mozart-k545",
-            title: "Sonata in C Major (K. 545)",
-            composer: "W.A. Mozart",
-            icon: "music.note",
-            streamURLString: "https://ia800303.us.archive.org/2/items/MozartPianoSonata16InCMajorK545/01Allegro.mp3",
-            description: "The classic 'Mozart Effect' for cognitive clarity and speed."
-        ),
-        ClassicalTrack(
-            id: "beethoven-moonlight",
-            title: "Moonlight Sonata (Adagio)",
-            composer: "Ludwig van Beethoven",
+            id: "debussy-clair-de-lune",
+            title: "Clair de Lune",
+            composer: "Claude Debussy",
             icon: "moon.stars.fill",
-            streamURLString: "https://ia800301.us.archive.org/15/items/MoonlightSonata_853/MoonlightSonata.mp3",
-            description: "Atmospheric and hypnotic for total immersion."
+            streamURLString: "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/be/Clair_de_lune_%28Claude_Debussy%29_Suite_bergamasque.ogg/Clair_de_lune_%28Claude_Debussy%29_Suite_bergamasque.ogg.mp3",
+            description: "Deeply calming impressionist piano for effortless reading and essay writing."
         ),
         ClassicalTrack(
             id: "satie-gymnopedie",
             title: "Gymnopédie No. 1",
             composer: "Erik Satie",
             icon: "sparkles",
-            streamURLString: "https://ia800301.us.archive.org/13/items/GymnopedieNo1_976/GymnopedieNo1.mp3",
-            description: "Minimalist ambient piano for stress-free concentration."
+            streamURLString: "https://upload.wikimedia.org/wikipedia/commons/transcoded/9/90/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg.mp3",
+            description: "Ultra-peaceful, slow ambient piano. Completely eliminates study stress."
+        ),
+        ClassicalTrack(
+            id: "pachelbel-canon",
+            title: "Canon in D Major",
+            composer: "Johann Pachelbel",
+            icon: "guitars.fill",
+            streamURLString: "https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/Pachelbel%27s_Canon.ogg/Pachelbel%27s_Canon.ogg.mp3",
+            description: "Soothing harmonic strings, iconic calming cadence for zero-anxiety focus."
+        ),
+        ClassicalTrack(
+            id: "chopin-nocturne",
+            title: "Nocturne in E-Flat (Op. 9 No. 2)",
+            composer: "Frédéric Chopin",
+            icon: "pianokeys.inverse",
+            streamURLString: "https://upload.wikimedia.org/wikipedia/commons/8/82/Nocturne_in_E_flat_major%2C_Op._9_no._2.mp3",
+            description: "Gentle romantic night piano. Soft, delicate, and relaxing."
+        ),
+        ClassicalTrack(
+            id: "bach-air",
+            title: "Air on the G String",
+            composer: "J.S. Bach",
+            icon: "music.note",
+            streamURLString: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Air_-_Air_Force_Strings_-_United_States_Air_Force_Band.mp3",
+            description: "Smooth, serene baroque strings that steady the mind and heart rate."
+        ),
+        ClassicalTrack(
+            id: "beethoven-fur-elise",
+            title: "Für Elise (Poco Moto)",
+            composer: "Ludwig van Beethoven",
+            icon: "pianokeys",
+            streamURLString: "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/8f/Fur_Elise.ogg/Fur_Elise.ogg.mp3",
+            description: "Soft, nostalgic piano melody that encourages steady, calm concentration."
         )
     ]
     
