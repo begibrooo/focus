@@ -37,10 +37,20 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
+	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>shortcuts</string>
 		<string>app-prefs</string>
+		<string>instagram</string>
+		<string>snssdk1233</string>
+		<string>tiktok</string>
+		<string>youtube</string>
+		<string>twitter</string>
+		<string>tg</string>
 	</array>
 </dict>
 </plist>

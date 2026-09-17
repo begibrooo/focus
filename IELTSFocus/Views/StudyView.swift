@@ -10,7 +10,12 @@ struct StudyView: View {
     @AppStorage("disciplineXP") private var disciplineXP: Int = 120
     @AppStorage("slackerStrikes") private var slackerStrikes: Int = 0
     
-    @State private var viewModel = TimerViewModel()
+    @Bindable var viewModel: TimerViewModel
+    
+    init(viewModel: TimerViewModel = TimerViewModel()) {
+        self.viewModel = viewModel
+    }
+    
     @State private var showSetupGuide: Bool = false
     @State private var showFrictionGate: Bool = false
     @State private var showDistractionAllowance: Bool = false
