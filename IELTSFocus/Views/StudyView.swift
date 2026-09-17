@@ -3,13 +3,24 @@ import SwiftData
 
 struct StudyView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
+    
     @AppStorage("focusShortcutName") private var focusShortcutName: String = "Study Focus"
     @AppStorage("enableFrictionGate") private var enableFrictionGate: Bool = true
+    @AppStorage("disciplineXP") private var disciplineXP: Int = 120
+    @AppStorage("slackerStrikes") private var slackerStrikes: Int = 0
     
     @State private var viewModel = TimerViewModel()
     @State private var showSetupGuide: Bool = false
     @State private var showFrictionGate: Bool = false
     @State private var showDistractionAllowance: Bool = false
+    @State private var showExamLockGuide: Bool = false
+    @State private var showFocusOptionsDialog: Bool = false
+    
+    // Background tracking
+    @State private var backgroundedAt: Date? = nil
+    @State private var showAbandonmentBust: Bool = false
+    @State private var abandonmentDuration: Int = 0
     
     var body: some View {
         NavigationStack {
@@ -31,6 +42,9 @@ struct StudyView: View {
                     // Controls (Start / Pause / Resume / Cancel)
                     controlsSection
                     
+                    // Exam Lock (Guided Access) Helper Banner
+                    examLockBanner
+                    
                     // Strict Bro's Game Pass Banner
                     breakPassBanner
                     
@@ -50,6 +64,9 @@ struct StudyView: View {
             .sheet(isPresented: $showSetupGuide) {
                 ShortcutSetupGuideView(shortcutName: focusShortcutName.isEmpty ? "Study Focus" : focusShortcutName)
             }
+            .sheet(isPresented: $showExamLockGuide) {
+                ExamLockGuideView()
+            }
             .sheet(isPresented: $showFrictionGate) {
                 FrictionGateView(
                     onConfirmExit: {
@@ -62,6 +79,64 @@ struct StudyView: View {
             }
             .sheet(isPresented: $showDistractionAllowance) {
                 DistractionAllowanceView()
+            }
+            .confirmationDialog(
+                "Lock In Focus Mode 🛡️",
+                isPresented: $showFocusOptionsDialog,
+                titleVisibility: .visible
+            ) {
+                Button("Option A: Open iOS Focus / DND Settings (1-Tap)") {
+                    FocusShortcutService.openFocusSettings()
+                }
+                Button("Option B: Run '\(focusShortcutName)' Shortcut") {
+                    let triggered = FocusShortcutService.runShortcut(named: focusShortcutName)
+                    if !triggered {
+                        showSetupGuide = true
+                    }
+                }
+                Button("Option C: Create Shortcut in Shortcuts App") {
+                    FocusShortcutService.openCreateShortcut()
+                }
+                Button("View Shortcut Setup Instructions") {
+                    showSetupGuide = true
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("Select an option to silence incoming notifications. To avoid 'file doesn't exist' errors, use Option A or create the shortcut first in Option C.")
+            }
+            .alert("🚨 BRO, YOU ABANDONED THE APP!", isPresented: $showAbandonmentBust) {
+                Button("I'm Back (No Excuses)", role: .cancel) { }
+            } message: {
+                Text("You left IELTS Focus for \(abandonmentDuration) seconds while your timer was running! Strict Bro detected this. Triple-click your side button for Exam Lock so you can't swipe away!")
+            }
+            .onChange(of: scenePhase) { oldPhase, newPhase in
+                handleScenePhaseChange(to: newPhase)
+            }
+        }
+    }
+    
+    // MARK: - Scene Phase / Abandonment Monitor
+    private func handleScenePhaseChange(to phase: ScenePhase) {
+        if phase == .background {
+            if viewModel.timerState == .running {
+                backgroundedAt = Date()
+                NotificationService.shared.scheduleAbandonmentWarning()
+            }
+        } else if phase == .active {
+            if let bgDate = backgroundedAt, viewModel.timerState == .running {
+                let elapsed = Int(Date().timeIntervalSince(bgDate))
+                NotificationService.shared.cancelAbandonmentWarning()
+                backgroundedAt = nil
+                
+                if elapsed >= 10 {
+                    abandonmentDuration = elapsed
+                    disciplineXP = max(0, disciplineXP - 25)
+                    slackerStrikes = min(3, slackerStrikes + 1)
+                    showAbandonmentBust = true
+                }
+            } else {
+                NotificationService.shared.cancelAbandonmentWarning()
+                backgroundedAt = nil
             }
         }
     }
@@ -82,6 +157,52 @@ struct StudyView: View {
             durationMinutes: viewModel.selectedType.durationMinutes
         )
         modelContext.insert(newSession)
+        disciplineXP += 50
+    }
+    
+    // MARK: - Exam Lock Banner (Guided Access)
+    private var examLockBanner: some View {
+        Button {
+            showExamLockGuide = true
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(Color.red.opacity(0.15))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "lock.shield.fill")
+                        .foregroundStyle(Color.red)
+                        .font(.title3)
+                }
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 6) {
+                        Text("Exam Lock (Triple-Click)")
+                            .font(.subheadline.weight(.bold))
+                            .foregroundStyle(.primary)
+                        Text("CAN'T CLOSE")
+                            .font(.system(size: 9, weight: .heavy))
+                            .foregroundStyle(.red)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.red.opacity(0.12))
+                            .clipShape(Capsule())
+                    }
+                    Text("Guided Access physically disables the swipe-up home bar")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.secondary)
+            }
+            .padding()
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
     }
     
     // MARK: - Strict Bro's Break Pass Banner
@@ -100,10 +221,19 @@ struct StudyView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Strict Bro's Game Pass 🥊")
-                        .font(.subheadline.weight(.bold))
-                        .foregroundStyle(.primary)
-                    Text("Need a break? Set strict minutes with zero excuses")
+                    HStack(spacing: 6) {
+                        Text("Strict Bro's Game Pass 🥊")
+                            .font(.subheadline.weight(.bold))
+                            .foregroundStyle(.primary)
+                        Text("MAX 2/DAY")
+                            .font(.system(size: 9, weight: .heavy))
+                            .foregroundStyle(.purple)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.purple.opacity(0.12))
+                            .clipShape(Capsule())
+                    }
+                    Text("Instagram, TikTok, Games. Timed pass with return check-in.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -122,51 +252,38 @@ struct StudyView: View {
     
     // MARK: - Focus Mode Shortcut Banner
     private var focusModeBanner: some View {
-        HStack(spacing: 12) {
-            Button {
-                FocusShortcutService.runShortcut(named: focusShortcutName.isEmpty ? "Study Focus" : focusShortcutName)
-            } label: {
-                HStack(spacing: 12) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.indigo.opacity(0.15))
-                            .frame(width: 44, height: 44)
-                        Image(systemName: "shield.lefthalf.filled")
-                            .foregroundStyle(Color.indigo)
-                            .font(.title3)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Lock In Focus Mode 🛡️")
-                            .font(.subheadline.weight(.bold))
-                            .foregroundStyle(.primary)
-                        Text("Silences notifications via '\(focusShortcutName)'")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    
-                    Spacer()
-                    
-                    Image(systemName: "arrow.up.forward.app")
-                        .font(.caption.weight(.bold))
+        Button {
+            showFocusOptionsDialog = true
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(Color.indigo.opacity(0.15))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "shield.lefthalf.filled")
+                        .foregroundStyle(Color.indigo)
+                        .font(.title3)
+                }
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Lock In Focus Mode 🛡️")
+                        .font(.subheadline.weight(.bold))
+                        .foregroundStyle(.primary)
+                    Text("1-Tap DND Settings or Shortcuts automation")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-            }
-            
-            // Info / Setup button
-            Button {
-                showSetupGuide = true
-            } label: {
-                Image(systemName: "questionmark.circle")
+                
+                Spacer()
+                
+                Image(systemName: "ellipsis.circle")
                     .font(.title3)
                     .foregroundStyle(.secondary)
-                    .padding(8)
             }
+            .padding()
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
         }
-        .padding()
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .padding(.top, 4)
     }
     
     // MARK: - Session Type Picker

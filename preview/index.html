@@ -753,6 +753,56 @@
     .ios-notification.show {
       transform: translateY(0);
     }
+
+    /* App Grid in Game Pass */
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 12px 0 16px;
+      text-align: left;
+    }
+    .app-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.2s;
+    }
+    .app-pill.active {
+      background: rgba(168, 85, 247, 0.25);
+      border-color: #c084fc;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+    }
+
+    /* Guided Access Overlay */
+    .guided-access-overlay {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(239, 68, 68, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.5px;
+      display: none;
+      z-index: 190;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+    }
+    .guided-access-overlay.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -815,9 +865,12 @@
       </div>
 
       <!-- Dev Fast Test Ribbon -->
-      <div class="dev-ribbon">
+      <div class="dev-ribbon" style="flex-wrap: wrap; gap: 6px;">
         <span>⚡ 15 Pro Max Test: <strong id="speed-label" style="color: #f87171;">OFF (Real Time)</strong></span>
-        <button class="dev-toggle-btn" onclick="toggleTestSpeed()">Toggle 10s Demo</button>
+        <div style="display: flex; gap: 6px;">
+          <button class="dev-toggle-btn" onclick="toggleTestSpeed()">Toggle 10s Demo</button>
+          <button class="dev-toggle-btn" style="background: rgba(239, 68, 68, 0.25); color: #fca5a5; border-color: rgba(239, 68, 68, 0.4);" onclick="simulateAppExit()">📱 Test Leaving App</button>
+        </div>
       </div>
 
       <!-- Tab Content Area -->
@@ -856,28 +909,46 @@
             </div>
           </div>
 
+          <!-- Exam Lock (Guided Access) Banner -->
+          <div class="liquid-glass banner" onclick="openExamLockModal()">
+            <div class="banner-left">
+              <div class="icon-badge" style="color: #ef4444; background: rgba(239, 68, 68, 0.15);">🔒</div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="font-size: 14px; font-weight: 800; color: #fff;">Exam Lock (Triple-Click)</span>
+                  <span style="font-size: 9px; font-weight: 900; color: #ef4444; background: rgba(239,68,68,0.2); padding: 2px 6px; border-radius: 99px;">CAN'T CLOSE</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Guided Access physically disables the swipe-up home bar</div>
+              </div>
+            </div>
+            <div style="color: #ef4444; font-size: 13px; font-weight: 800;">Setup 🔒</div>
+          </div>
+
           <!-- Strict Bro's Game Pass (Liquid Glass) -->
           <div class="liquid-glass banner" onclick="openBreakPassModal()">
             <div class="banner-left">
               <div class="icon-badge" style="color: #c084fc;">🥊</div>
               <div>
-                <div style="font-size: 14px; font-weight: 800; color: #fff;">Strict Bro's Game Pass</div>
-                <div style="font-size: 11px; color: var(--text-secondary);">Need a break? Set strict minutes, zero excuses</div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="font-size: 14px; font-weight: 800; color: #fff;">Strict Bro's Game Pass</span>
+                  <span id="gamepass-mini-badge" style="font-size: 9px; font-weight: 900; color: #c084fc; background: rgba(168,85,247,0.2); padding: 2px 6px; border-radius: 99px;">MAX 2/DAY</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Instagram, TikTok, Games. Timed pass with return check-in.</div>
               </div>
             </div>
-            <div style="color: #c084fc; font-size: 13px; font-weight: 800;">Set ⏱</div>
+            <div style="color: #c084fc; font-size: 13px; font-weight: 800;">Pass ⏱</div>
           </div>
 
           <!-- Focus Mode Shortcut Banner (Liquid Glass) -->
-          <div class="liquid-glass banner" onclick="triggerFocusShortcut()">
+          <div class="liquid-glass banner" onclick="openFocusOptionsModal()">
             <div class="banner-left">
               <div class="icon-badge" style="color: #818cf8;">🛡️</div>
               <div>
                 <div style="font-size: 14px; font-weight: 800;">Lock In Focus Mode</div>
-                <div style="font-size: 11px; color: var(--text-secondary);">Silences distractions via '<span id="shortcut-name-disp">Study Focus</span>'</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">1-Tap DND or Shortcuts automation</div>
               </div>
             </div>
-            <div style="color: #818cf8; font-size: 13px; font-weight: 800;">Launch ↗</div>
+            <div style="color: #818cf8; font-size: 13px; font-weight: 800;">Options ⋯</div>
           </div>
 
           <!-- Strict Bro Advice -->
@@ -1043,44 +1114,220 @@
         </div>
       </div>
 
+      <!-- Home Indicator Swipe Bar -->
+      <div id="home-indicator-bar" style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 140px; height: 5px; background: rgba(255,255,255,0.4); border-radius: 99px; z-index: 180; transition: all 0.3s;"></div>
+      <div id="guided-access-badge" class="guided-access-overlay">🔒 GUIDED ACCESS ACTIVE: SWIPE BAR DISABLED</div>
+
       <!-- STRICT BRO GAME PASS MODAL -->
       <div id="break-modal" class="modal-overlay">
         <div class="modal-sheet">
           <div style="text-align: center;">
-            <div style="font-size: 46px;">🥊</div>
-            <div style="font-size: 21px; font-weight: 900; margin: 6px 0;">Strict Bro's Game Pass</div>
-            <div style="font-size: 13px; color: var(--text-secondary);">
-              Be real: does scrolling TikTok get you Band 8.0? Pick your time, and when the buzzer goes off, phone goes face down.
+            <div style="font-size: 44px;">🥊</div>
+            <div style="font-size: 20px; font-weight: 900; margin: 4px 0;">Strict Bro's Game Pass</div>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
+              Pick 1 distraction app and set exact minutes. When the buzzer sounds, you return immediately or face strikes.
+            </div>
+
+            <!-- Pass Stats Row -->
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+              <div style="flex: 1; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 8px; text-align: left;">
+                <div style="font-size: 10px; font-weight: 800; color: #c084fc;">DAILY PASSES</div>
+                <div id="gamepass-left-text" style="font-size: 14px; font-weight: 900; color: #fff;">2 / 2 left today</div>
+              </div>
+              <div style="flex: 1; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 8px; text-align: left;">
+                <div style="font-size: 10px; font-weight: 800; color: #f87171;">SLACKER STRIKES</div>
+                <div id="strikes-count-text" style="font-size: 14px; font-weight: 900; color: #fff;">0 / 3 max</div>
+              </div>
             </div>
 
             <div id="break-setup-section">
-              <div class="duration-grid">
+              <!-- App Chooser Grid -->
+              <div style="text-align: left; font-size: 11px; font-weight: 800; color: var(--text-secondary); letter-spacing: 0.8px; margin-bottom: 6px;">1. TARGET APP:</div>
+              <div class="app-grid">
+                <div class="app-pill active" onclick="selectDistractionApp('instagram', 'Instagram', '📷', '#ec4899', this)">
+                  <span>📷</span> <span>Instagram</span>
+                </div>
+                <div class="app-pill" onclick="selectDistractionApp('tiktok', 'TikTok', '🎵', '#06b6d4', this)">
+                  <span>🎵</span> <span>TikTok</span>
+                </div>
+                <div class="app-pill" onclick="selectDistractionApp('youtube', 'YouTube', '📺', '#ef4444', this)">
+                  <span>📺</span> <span>YouTube</span>
+                </div>
+                <div class="app-pill" onclick="selectDistractionApp('games', 'Mobile Games', '🎮', '#a855f7', this)">
+                  <span>🎮</span> <span>Mobile Games</span>
+                </div>
+                <div class="app-pill" onclick="selectDistractionApp('telegram', 'Telegram', '💬', '#14b8a6', this)">
+                  <span>💬</span> <span>Telegram</span>
+                </div>
+                <div class="app-pill" onclick="selectDistractionApp('x', 'X / Twitter', '🐦', '#3b82f6', this)">
+                  <span>🐦</span> <span>X / Twitter</span>
+                </div>
+              </div>
+
+              <!-- Duration Selector -->
+              <div style="text-align: left; font-size: 11px; font-weight: 800; color: var(--text-secondary); letter-spacing: 0.8px; margin-bottom: 6px;">2. STRICT DURATION:</div>
+              <div class="duration-grid" style="margin-top: 0;">
                 <div class="duration-pill active" onclick="selectBreakDuration(5, this)">5m</div>
                 <div class="duration-pill" onclick="selectBreakDuration(10, this)">10m</div>
                 <div class="duration-pill" onclick="selectBreakDuration(15, this)">15m</div>
-                <div class="duration-pill" onclick="selectBreakDuration(30, this)">30m</div>
+                <div class="duration-pill" onclick="selectBreakDuration(20, this)">20m</div>
               </div>
 
-              <button class="btn" style="background: var(--purple); color: #fff; width: 100%; margin-bottom: 12px;" onclick="startBreakTimer()">
-                ✋ I Swear I'll Stop When Time is Up
+              <button id="activate-pass-btn" class="btn" style="background: var(--purple); color: #fff; width: 100%; margin-bottom: 10px;" onclick="startBreakTimer()">
+                🚀 Activate Pass & Launch <span id="chosen-app-btn-name">Instagram</span>
               </button>
             </div>
 
-            <div id="break-active-section" style="display: none; margin: 18px 0;">
-              <div style="font-size: 12px; font-weight: 800; color: #c084fc; text-transform: uppercase;">Clock is Ticking Bro</div>
-              <div id="break-time-display" style="font-size: 52px; font-weight: 900; font-variant-numeric: tabular-nums; margin: 8px 0; color: #fff;">05:00</div>
-              <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 18px;">
-                Enjoy your quick break. When this hits zero, the alarm blasts and you're back to IELTS prep.
+            <div id="break-active-section" style="display: none; margin: 14px 0;">
+              <div style="font-size: 12px; font-weight: 800; color: #c084fc; text-transform: uppercase;">
+                PASS RUNNING FOR <span id="active-app-name-display">INSTAGRAM</span>
               </div>
-              <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="endBreakTimerEarly()">
-                ⚡ Enough Slacking — Back to Study
-              </button>
+              <div id="break-time-display" style="font-size: 50px; font-weight: 900; font-variant-numeric: tabular-nums; margin: 6px 0; color: #fff;">05:00</div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">
+                Buzzer armed. Return before zero to keep your discipline streak.
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button class="btn btn-primary" style="width: 100%;" onclick="simulateReturnFromBreak(true)">
+                  🏅 Return to IELTS Focus On Time (+30 XP)
+                </button>
+                <button class="btn" style="width: 100%; background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35);" onclick="simulateReturnFromBreak(false)">
+                  ⚠️ Simulate Returning Late / Overtime (Test Penalty)
+                </button>
+              </div>
             </div>
 
-            <button class="btn" style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; width: 100%;" onclick="closeBreakPassModal()">
+            <button class="btn" style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; width: 100%; margin-top: 8px;" onclick="closeBreakPassModal()">
               Dismiss
             </button>
           </div>
+        </div>
+      </div>
+
+      <!-- EXAM LOCK (GUIDED ACCESS) MODAL -->
+      <div id="exam-lock-modal" class="modal-overlay">
+        <div class="modal-sheet">
+          <div style="text-align: center;">
+            <div style="font-size: 46px;">🔒</div>
+            <div style="font-size: 21px; font-weight: 900; margin: 6px 0; color: #f87171;">Exam Lock Mode</div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+              iOS sandbox prevents apps from trapping you, but Apple has an official unbreakable feature: <strong>Guided Access</strong>.
+            </div>
+
+            <!-- 3 Step Guide -->
+            <div style="text-align: left; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 14px; margin-bottom: 16px;">
+              <div style="font-size: 11px; font-weight: 900; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px;">HOW TO LOCK YOUR IPHONE 15 PRO MAX:</div>
+              <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="width: 24px; height: 24px; border-radius: 50%; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; flex-shrink: 0;">1</div>
+                <div style="font-size: 12px; color: #cbd5e1;">Open iPhone <strong>Settings > Accessibility > Guided Access</strong> and turn it <strong>ON</strong>.</div>
+              </div>
+              <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="width: 24px; height: 24px; border-radius: 50%; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; flex-shrink: 0;">2</div>
+                <div style="font-size: 12px; color: #cbd5e1;">Set a passcode or turn on Face ID so only you can unlock it.</div>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <div style="width: 24px; height: 24px; border-radius: 50%; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; flex-shrink: 0;">3</div>
+                <div style="font-size: 12px; color: #cbd5e1;">Inside IELTS Focus, <strong>Triple-Click the Side/Power Button</strong>. The home swipe bar is physically disabled!</div>
+              </div>
+            </div>
+
+            <button id="guided-access-toggle-btn" class="btn" style="background: var(--danger); color: #fff; width: 100%; margin-bottom: 10px;" onclick="toggleGuidedAccessSimulation()">
+              🔒 Simulate Triple-Click (Lock iPhone Inside App)
+            </button>
+
+            <button class="btn" style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; width: 100%;" onclick="closeExamLockModal()">
+              Close Guide
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABANDONMENT / LEAVING APP SIMULATOR MODAL -->
+      <div id="abandonment-modal" class="modal-overlay">
+        <div class="modal-sheet">
+          <div style="text-align: center;">
+            <div id="abandon-icon" style="font-size: 48px; animation: pulseGlow 1s infinite;">🚨</div>
+            <div id="abandon-title" style="font-size: 21px; font-weight: 900; margin: 6px 0; color: #f87171;">BRO, WHERE ARE YOU GOING?!</div>
+            <div id="abandon-desc" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+              You switched away from IELTS Focus while your timer is running! Our background abandonment siren is armed.
+            </div>
+
+            <div id="abandon-timer-box" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 16px; padding: 14px; margin-bottom: 16px;">
+              <div style="font-size: 11px; font-weight: 800; color: #f87171; text-transform: uppercase;">Time Away From Study</div>
+              <div id="abandon-time-display" style="font-size: 44px; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums;">00:05</div>
+              <div id="abandon-siren-status" style="font-size: 12px; color: #fca5a5; margin-top: 4px;">⚠️ SIREN BLASTING IN 5 SECONDS!</div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="returnFromAbandonment()">
+              🏃 Return to IELTS Focus Immediately
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOCUS OPTIONS MODAL (Resolves 'File doesn't exist' error) -->
+      <div id="focus-options-modal" class="modal-overlay">
+        <div class="modal-sheet">
+          <div style="text-align: center;">
+            <div style="font-size: 44px;">🛡️</div>
+            <div style="font-size: 20px; font-weight: 900; margin: 6px 0;">Lock In Focus Mode</div>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+              Silence incoming calls, messages, and social alerts so you stay in the zone.
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+              <!-- Option A: Instant 1-Tap iOS Settings -->
+              <button class="btn" style="background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #fff; text-align: left; padding: 14px; display: flex; align-items: center; gap: 12px;" onclick="selectFocusOption('instant')">
+                <span style="font-size: 24px;">🌙</span>
+                <div>
+                  <div style="font-weight: 800; font-size: 13px; color: #c084fc;">Option A: 1-Tap iOS Focus / DND Settings</div>
+                  <div style="font-size: 11px; color: #94a3b8;">Zero setup needed. Works instantly out of the box.</div>
+                </div>
+              </button>
+
+              <!-- Option B: Run Shortcut -->
+              <button class="btn" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #fff; text-align: left; padding: 14px; display: flex; align-items: center; gap: 12px;" onclick="selectFocusOption('run')">
+                <span style="font-size: 24px;">⚡</span>
+                <div>
+                  <div style="font-weight: 800; font-size: 13px; color: #60a5fa;">Option B: Run 'Study Focus' Shortcut</div>
+                  <div style="font-size: 11px; color: #94a3b8;">Triggers Apple Shortcuts if created on your device.</div>
+                </div>
+              </button>
+
+              <!-- Option C: Create Shortcut in Shortcuts app -->
+              <button class="btn" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; text-align: left; padding: 14px; display: flex; align-items: center; gap: 12px;" onclick="selectFocusOption('create')">
+                <span style="font-size: 24px;">🛠️</span>
+                <div>
+                  <div style="font-weight: 800; font-size: 13px; color: #cbd5e1;">Option C: Create 'Study Focus' (1-Min Setup)</div>
+                  <div style="font-size: 11px; color: #94a3b8;">See 3-step guide to build the shortcut in Shortcuts app.</div>
+                </div>
+              </button>
+            </div>
+
+            <button class="btn" style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; width: 100%;" onclick="closeFocusOptionsModal()">
+              Dismiss
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAME PASS RETURN CHECK-IN MODAL -->
+      <div id="gamepass-return-modal" class="modal-overlay">
+        <div class="modal-sheet" style="text-align: center;">
+          <div id="checkin-icon" style="font-size: 54px; margin-bottom: 8px;">🏅</div>
+          <div id="checkin-title" style="font-size: 22px; font-weight: 900; margin-bottom: 6px;">Word Kept, Bro!</div>
+          <div id="checkin-desc" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+            You returned on time. You showed discipline.
+          </div>
+
+          <div id="checkin-reward-box" style="padding: 14px; border-radius: 16px; margin-bottom: 18px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35);">
+            <div id="checkin-badge" style="font-size: 14px; font-weight: 800; margin-bottom: 4px; color: #34d399;">+30 Discipline XP Awarded</div>
+            <div id="checkin-sub" style="font-size: 11px; color: #cbd5e1;">Your word is your bond. Now back to the IELTS grind.</div>
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%;" onclick="closeGamePassReturnModal()">
+            Lock In: Back to Study
+          </button>
         </div>
       </div>
 
@@ -1202,6 +1449,23 @@
           osc.connect(gain); gain.connect(this.ctx.destination);
           osc.start(startTime); osc.stop(startTime + 0.5);
         });
+      },
+      playSiren() {
+        if (!this.isEnabled()) return;
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(550, now);
+        osc.frequency.linearRampToValueAtTime(950, now + 0.2);
+        osc.frequency.linearRampToValueAtTime(550, now + 0.4);
+        osc.frequency.linearRampToValueAtTime(950, now + 0.6);
+        osc.frequency.linearRampToValueAtTime(550, now + 0.8);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.9);
       }
     };
 
@@ -1406,8 +1670,146 @@
       setTimeout(() => phoneFrameEl.classList.remove('shake'), 450);
     }
 
+    // Strict Bro State
+    let isGuidedAccessActive = false;
+    let dailyPassesLeft = 2;
+    let slackerStrikes = 0;
+    let currentXP = 120;
+    let selectedDistractionApp = { id: 'instagram', name: 'Instagram', icon: '📷', color: '#ec4899' };
+    let abandonSecondsLeft = 5;
+    let abandonInterval = null;
+
+    // --- EXAM LOCK (GUIDED ACCESS) ---
+    function openExamLockModal() {
+      AudioEngine.playClick();
+      document.getElementById('exam-lock-modal').classList.add('active');
+    }
+
+    function closeExamLockModal() {
+      AudioEngine.playClick();
+      document.getElementById('exam-lock-modal').classList.remove('active');
+    }
+
+    function toggleGuidedAccessSimulation() {
+      AudioEngine.playClick();
+      isGuidedAccessActive = !isGuidedAccessActive;
+      const btn = document.getElementById('guided-access-toggle-btn');
+      const badge = document.getElementById('guided-access-badge');
+      const bar = document.getElementById('home-indicator-bar');
+
+      if (isGuidedAccessActive) {
+        btn.textContent = "🔓 Unlock iPhone (Triple-Click Again)";
+        btn.style.background = "#10b981";
+        badge.classList.add('active');
+        bar.style.background = "rgba(239, 68, 68, 0.8)";
+        showNotification("Guided Access Locked 🔒", "Triple-click engaged! Swipe bar disabled. You cannot exit!", "🔒");
+      } else {
+        btn.textContent = "🔒 Simulate Triple-Click (Lock iPhone Inside App)";
+        btn.style.background = "var(--danger)";
+        badge.classList.remove('active');
+        bar.style.background = "rgba(255, 255, 255, 0.4)";
+        showNotification("Guided Access Released 🔓", "Triple-click passcode confirmed. Swipe bar re-enabled.", "🔓");
+      }
+      closeExamLockModal();
+    }
+
+    // --- FOCUS OPTIONS (RESOLVES 'FILE DOESN'T EXIST' ERROR) ---
+    function openFocusOptionsModal() {
+      AudioEngine.playClick();
+      document.getElementById('focus-options-modal').classList.add('active');
+    }
+
+    function closeFocusOptionsModal() {
+      AudioEngine.playClick();
+      document.getElementById('focus-options-modal').classList.remove('active');
+    }
+
+    function selectFocusOption(type) {
+      AudioEngine.playClick();
+      closeFocusOptionsModal();
+      if (type === 'instant') {
+        showNotification("iOS Focus Activated 🌙", "Direct DND engaged. Zero setup required. All alerts muted.", "🌙");
+      } else if (type === 'run') {
+        const name = localStorage.getItem('ielts_shortcut_name') || 'Study Focus';
+        showNotification("Focus Mode Armed 🛡️", `Triggered '${name}' shortcut via Apple Shortcuts.`, "🛡️");
+      } else if (type === 'create') {
+        showNotification("Shortcuts Creator Opened 🛠️", "Add 'Set Focus' -> rename to 'Study Focus'. Done in 30s.", "🛠️");
+      }
+    }
+
+    // --- ABANDONMENT / LEAVING APP SIMULATOR ---
+    function simulateAppExit() {
+      AudioEngine.playClick();
+      if (isGuidedAccessActive) {
+        triggerPhoneShake();
+        AudioEngine.playBuzzer();
+        showNotification("Guided Access Active 🔒", "Hardware physically blocks swipe-up! You CANNOT leave IELTS Focus.", "🔒");
+        return;
+      }
+
+      if (timerState !== 'running') {
+        showNotification("Start Session First ⏱", "Start a study timer first to test the Abandonment Siren defense!", "⚠️");
+        return;
+      }
+
+      // Open abandonment simulator modal
+      document.getElementById('abandonment-modal').classList.add('active');
+      abandonSecondsLeft = 5;
+      document.getElementById('abandon-time-display').textContent = '00:05';
+      document.getElementById('abandon-siren-status').textContent = '⚠️ SIREN BLASTING IN 5 SECONDS!';
+
+      // Pulse Dynamic Island red
+      const island = document.getElementById('dynamic-island');
+      island.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.9)';
+      document.getElementById('island-time-text').textContent = '🚨 RETURN!';
+      document.getElementById('island-time-text').style.color = '#ef4444';
+
+      clearInterval(abandonInterval);
+      abandonInterval = setInterval(() => {
+        if (abandonSecondsLeft > 0) {
+          abandonSecondsLeft--;
+          document.getElementById('abandon-time-display').textContent = `00:0${abandonSecondsLeft}`;
+          document.getElementById('abandon-siren-status').textContent = `⚠️ SIREN BLASTING IN ${abandonSecondsLeft} SECONDS!`;
+        } else {
+          document.getElementById('abandon-siren-status').textContent = '🚨🚨 SIREN BLASTING! SESSION COMPROMISED!';
+          AudioEngine.playSiren();
+          triggerPhoneShake();
+        }
+      }, 1000);
+    }
+
+    function returnFromAbandonment() {
+      AudioEngine.playClick();
+      clearInterval(abandonInterval);
+      document.getElementById('abandonment-modal').classList.remove('active');
+
+      const island = document.getElementById('dynamic-island');
+      island.style.boxShadow = '';
+      updateDynamicIsland();
+
+      slackerStrikes = Math.min(3, slackerStrikes + 1);
+      currentXP = Math.max(0, currentXP - 25);
+      document.getElementById('strikes-count-text').textContent = `${slackerStrikes} / 3 max`;
+      
+      triggerPhoneShake();
+      AudioEngine.playBuzzer();
+      alert("🚨 BUSTED! Strict Bro detected you leaving IELTS Focus mid-session!\n\nPenalty Applied: -25 XP and 1 Slacker Strike recorded!\n\nTriple-click the side button for Exam Lock so you physically cannot swipe away!");
+    }
+
+    // --- STRICT BRO GAME PASS OVERHAUL ---
+    function selectDistractionApp(id, name, icon, color, el) {
+      AudioEngine.playClick();
+      selectedDistractionApp = { id, name, icon, color };
+      document.querySelectorAll('.app-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('chosen-app-btn-name').textContent = name;
+      document.getElementById('activate-pass-btn').style.background = color;
+    }
+
     function openBreakPassModal() {
       AudioEngine.playClick();
+      document.getElementById('gamepass-left-text').textContent = `${dailyPassesLeft} / 2 left today`;
+      document.getElementById('strikes-count-text').textContent = `${slackerStrikes} / 3 max`;
       document.getElementById('break-modal').classList.add('active');
     }
 
@@ -1425,11 +1827,29 @@
 
     function startBreakTimer() {
       AudioEngine.playClick();
+      if (dailyPassesLeft <= 0) {
+        AudioEngine.playBuzzer();
+        showNotification("Daily Limit Reached (2/2) 🥊", "Strict Bro: No more passes today. Get back to IELTS prep.", "🛑");
+        return;
+      }
+      if (slackerStrikes >= 3) {
+        AudioEngine.playBuzzer();
+        showNotification("Pass Privileges Revoked 🚨", "3 strikes reached. Pass locked for 24h. Focus on IELTS.", "🚨");
+        return;
+      }
+
+      dailyPassesLeft = Math.max(0, dailyPassesLeft - 1);
+      document.getElementById('gamepass-left-text').textContent = `${dailyPassesLeft} / 2 left today`;
+      document.getElementById('gamepass-mini-badge').textContent = `${dailyPassesLeft}/2 LEFT`;
+
       document.getElementById('break-setup-section').style.display = 'none';
       document.getElementById('break-active-section').style.display = 'block';
+      document.getElementById('active-app-name-display').textContent = selectedDistractionApp.name.toUpperCase();
 
       breakSecondsLeft = isFastMode ? 10 : selectedBreakMins * 60;
       updateBreakDisplay();
+
+      showNotification(`Launched ${selectedDistractionApp.name} 🚀`, `Break timer active for ${selectedBreakMins}m. Return buzzer armed!`, selectedDistractionApp.icon);
 
       clearInterval(breakTimer);
       breakTimer = setInterval(() => {
@@ -1440,11 +1860,7 @@
           clearInterval(breakTimer);
           AudioEngine.playBuzzer();
           triggerPhoneShake();
-          document.getElementById('break-modal').classList.remove('active');
-          document.getElementById('break-setup-section').style.display = 'block';
-          document.getElementById('break-active-section').style.display = 'none';
-          
-          showNotification("🚨 BRO! BREAK IS OVER.", "Close the game. Close TikTok. Get back to IELTS prep right now!", "🚨");
+          showNotification("🚨 BRO! GAME PASS EXPIRED!", `Close ${selectedDistractionApp.name} immediately or face a Slacker Strike!`, "🚨");
         }
       }, 1000);
     }
@@ -1455,13 +1871,56 @@
       document.getElementById('break-time-display').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     }
 
-    function endBreakTimerEarly() {
+    function simulateReturnFromBreak(isOnTime) {
       AudioEngine.playClick();
       clearInterval(breakTimer);
       document.getElementById('break-modal').classList.remove('active');
       document.getElementById('break-setup-section').style.display = 'block';
       document.getElementById('break-active-section').style.display = 'none';
-      showNotification("That's discipline bro.", "Break ended early. Let's finish the IELTS grind.", "🥊");
+
+      const checkinModal = document.getElementById('gamepass-return-modal');
+      const iconEl = document.getElementById('checkin-icon');
+      const titleEl = document.getElementById('checkin-title');
+      const descEl = document.getElementById('checkin-desc');
+      const boxEl = document.getElementById('checkin-reward-box');
+      const badgeEl = document.getElementById('checkin-badge');
+      const subEl = document.getElementById('checkin-sub');
+
+      if (isOnTime) {
+        AudioEngine.playVictory();
+        currentXP += 30;
+        iconEl.textContent = "🏅";
+        titleEl.textContent = "Word Kept, Bro!";
+        titleEl.style.color = "#34d399";
+        descEl.textContent = `You returned from ${selectedDistractionApp.name} within your ${selectedBreakMins}m pass. That's real discipline.`;
+        boxEl.style.background = "rgba(16, 185, 129, 0.15)";
+        boxEl.style.borderColor = "rgba(16, 185, 129, 0.35)";
+        badgeEl.textContent = "+30 Discipline XP Awarded";
+        badgeEl.style.color = "#34d399";
+        subEl.textContent = "Your word is your bond. Now back to the IELTS grind.";
+      } else {
+        AudioEngine.playBuzzer();
+        slackerStrikes = Math.min(3, slackerStrikes + 1);
+        currentXP = Math.max(0, currentXP - 50);
+        document.getElementById('strikes-count-text').textContent = `${slackerStrikes} / 3 max`;
+        
+        iconEl.textContent = "🚨";
+        titleEl.textContent = "SLACKER DETECTED!";
+        titleEl.style.color = "#f87171";
+        descEl.textContent = `You stayed on ${selectedDistractionApp.name} overtime past your ${selectedBreakMins}m pass! Band 8.0 doesn't wait for scroll addicts.`;
+        boxEl.style.background = "rgba(239, 68, 68, 0.15)";
+        boxEl.style.borderColor = "rgba(239, 68, 68, 0.35)";
+        badgeEl.textContent = "+1 Slacker Strike Recorded | -50 XP";
+        badgeEl.style.color = "#f87171";
+        subEl.textContent = "Strict Bro Warning: 3 strikes will permanently lock your Game Pass.";
+      }
+
+      checkinModal.classList.add('active');
+    }
+
+    function closeGamePassReturnModal() {
+      AudioEngine.playClick();
+      document.getElementById('gamepass-return-modal').classList.remove('active');
     }
 
     function openFrictionGate() {

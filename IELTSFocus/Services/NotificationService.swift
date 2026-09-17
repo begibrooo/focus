@@ -7,6 +7,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     private let sessionNotificationID = "IELTSFocusSessionComplete"
     private let dailyReminderNotificationID = "IELTSDailyStudyReminder"
     private let distractionBreakNotificationID = "IELTSDistractionBreakOver"
+    private let abandonmentWarningNotificationID = "IELTSAbandonedSessionWarning"
     
     private override init() {
         super.init()
@@ -52,9 +53,36 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     
     func cancelPendingNotifications() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [sessionNotificationID])
+        cancelAbandonmentWarning()
     }
     
-    // MARK: - Daily Study Reminder (Strict Bro Tone)
+    // MARK: - Abandonment Warning (When User Leaves App During Session)
+    
+    /// Called when the app is backgrounded while a session is actively running
+    func scheduleAbandonmentWarning() {
+        cancelAbandonmentWarning()
+        
+        let content = UNMutableNotificationContent()
+        content.title = "🚨 BRO, WHERE ARE YOU GOING?!"
+        content.body = "Your IELTS study timer is running! Get back in the app right now or your streak takes a hit."
+        content.sound = .defaultCritical
+        
+        // Fires 12 seconds after leaving the app
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 12, repeats: false)
+        let request = UNNotificationRequest(identifier: abandonmentWarningNotificationID, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error setting abandonment warning: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func cancelAbandonmentWarning() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [abandonmentWarningNotificationID])
+    }
+    
+    // MARK: - Daily Study Reminder
     
     func scheduleDailyReminder(hour: Int, minute: Int) {
         cancelDailyReminder()
@@ -82,7 +110,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [dailyReminderNotificationID])
     }
     
-    // MARK: - Distraction & Game Allowance Alert (Strict Bro Tone)
+    // MARK: - Game Allowance Alert
     
     func scheduleDistractionBreakAlert(afterMinutes minutes: Int) {
         cancelDistractionBreakAlert()

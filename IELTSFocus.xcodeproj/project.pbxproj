@@ -25,6 +25,7 @@
 		110031 /* DistractionAllowanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110032 /* DistractionAllowanceView.swift */; };
 		110033 /* ShortcutSetupGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110034 /* ShortcutSetupGuideView.swift */; };
 		110035 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110036 /* Theme.swift */; };
+		110055 /* ExamLockGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110056 /* ExamLockGuideView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		110034 /* ShortcutSetupGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSetupGuideView.swift; sourceTree = "<group>"; };
 		110036 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		110037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		110056 /* ExamLockGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamLockGuideView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				110028 /* SessionCompleteView.swift */,
 				110030 /* FrictionGateView.swift */,
 				110032 /* DistractionAllowanceView.swift */,
+				110056 /* ExamLockGuideView.swift */,
 			);
 			path = Study;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				110031 /* DistractionAllowanceView.swift in Sources */,
 				110033 /* ShortcutSetupGuideView.swift in Sources */,
 				110035 /* Theme.swift in Sources */,
+				110055 /* ExamLockGuideView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
